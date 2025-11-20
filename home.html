@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>नागरिक App | Nepal e-Governance Platform</title>
+    <title>CodeVengers|Lack of Coordination Between Local and Fedral goverment </title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -309,25 +309,9 @@
                     <i class="fas fa-briefcase"></i>
                     <span data-i18n="sidebar_services">All Services</span>
                 </button>
-                <button class="nav-btn" onclick="showTab('identity')">
-                    <i class="fas fa-id-card"></i>
-                    <span data-i18n="sidebar_identity">Digital Identity</span>
-                </button>
-                <button class="nav-btn" onclick="showTab('passport')">
-                    <i class="fas fa-passport"></i>
-                    <span data-i18n="sidebar_passport">Passport</span>
-                </button>
-                <button class="nav-btn" onclick="showTab('documents')">
-                    <i class="fas fa-folder"></i>
-                    <span data-i18n="sidebar_documents">Documents</span>
-                </button>
-                <button class="nav-btn" onclick="window.location.href='pay.html'">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Payments</span>
-                </button>
-                <button class="nav-btn" onclick="showTab('voting')">
-                    <i class="fas fa-vote-yea"></i>
-                    <span data-i18n="sidebar_voting">Voting</span>
+                <button class="nav-btn" onclick="showTab('news')">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Government News</span>
                 </button>
                 <button class="nav-btn" onclick="showTab('applications')">
                     <i class="fas fa-file-alt"></i>
@@ -402,42 +386,42 @@
                 <div class="stats-grid">
                     <div class="stat-card blue gradient-card">
                         <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 class="counter" data-target="2500000">0</h3>
-                            <p data-i18n="dashboard_stats_citizens">Active Citizens</p>
-                            <small class="trend"><i class="fas fa-arrow-up"></i> 12% this month</small>
-                        </div>
-                    </div>
-                    <div class="stat-card red gradient-card">
-                        <div class="stat-icon">
                             <i class="fas fa-file-alt"></i>
                         </div>
                         <div class="stat-info">
                             <h3 class="counter" data-target="4">0</h3>
-                            <p data-i18n="dashboard_stats_applications">My Applications</p>
-                            <small class="trend pending">2 pending review</small>
-                        </div>
-                    </div>
-                    <div class="stat-card purple gradient-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 class="counter" data-target="15000000">0</h3>
-                            <p data-i18n="dashboard_stats_documents">Documents Issued</p>
-                            <small class="trend"><i class="fas fa-arrow-up"></i> 8% growth</small>
+                            <p>My Applications</p>
+                            <small class="trend pending"><i class="fas fa-clock"></i> 2 pending review</small>
                         </div>
                     </div>
                     <div class="stat-card green gradient-card">
                         <div class="stat-icon">
-                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-check-circle"></i>
                         </div>
                         <div class="stat-info">
-                            <h3><span class="counter" data-target="94">0</span>%</h3>
-                            <p data-i18n="dashboard_stats_satisfaction">Satisfaction Rate</p>
-                            <small class="trend"><i class="fas fa-star"></i> Excellent</small>
+                            <h3 class="counter" data-target="8">0</h3>
+                            <p>Completed Services</p>
+                            <small class="trend"><i class="fas fa-arrow-up"></i> This month</small>
+                        </div>
+                    </div>
+                    <div class="stat-card purple gradient-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="counter" data-target="5">0</h3>
+                            <p>New Notifications</p>
+                            <small class="trend"><i class="fas fa-info-circle"></i> Updates available</small>
+                        </div>
+                    </div>
+                    <div class="stat-card orange gradient-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="counter" data-target="12">0</h3>
+                            <p>Government Updates</p>
+                            <small class="trend"><i class="fas fa-eye"></i> Unread news</small>
                         </div>
                     </div>
                 </div>
@@ -468,22 +452,23 @@
                         </div>
                     </div>
 
-                    <div class="action-card payments">
+                    <div class="action-card coordination-status">
                         <div class="action-card-header">
-                            <h3 data-i18n="dashboard_payments">Pending Payments</h3>
-                            <i class="fas fa-wallet"></i>
+                            <h3>Coordination Status</h3>
+                            <i class="fas fa-network-wired"></i>
                         </div>
-                        <div class="payment-summary">
-                            <div class="payment-item">
-                                <span>Electricity</span>
-                                <strong>Rs. 2,450</strong>
+                        <p>Track coordination between local and federal government</p>
+                        <div class="coordination-summary">
+                            <div class="coordination-item">
+                                <span><i class="fas fa-check-circle" style="color: #10b981;"></i> Requests Synced</span>
+                                <strong>12</strong>
                             </div>
-                            <div class="payment-item">
-                                <span>Water</span>
-                                <strong>Rs. 890</strong>
+                            <div class="coordination-item">
+                                <span><i class="fas fa-clock" style="color: #f59e0b;"></i> In Progress</span>
+                                <strong>3</strong>
                             </div>
                         </div>
-                        <button onclick="showTab('payments')" class="pay-all-btn" data-i18n="dashboard_payments">Pay All - Rs. 3,340</button>
+                        <button onclick="showTab('news')" class="btn-primary">View Updates</button>
                     </div>
                 </div>
 
@@ -632,7 +617,79 @@
 
             <!-- ALL 120+ SERVICES TAB -->
             <div id="services-tab" class="tab-content">
-                <!-- Will be populated by JavaScript with all 120 services -->
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title"><i class="fas fa-briefcase"></i> All Government Services</h2>
+                        <p class="page-subtitle">Access 120+ government services in one place</p>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="serviceSearch" placeholder="Search services..." onkeyup="filterServices()">
+                    </div>
+                </div>
+                <div class="services-category-tabs">
+                    <button class="category-tab active" onclick="filterByCategory('all')">All</button>
+                    <button class="category-tab" onclick="filterByCategory('citizenship')">Citizenship</button>
+                    <button class="category-tab" onclick="filterByCategory('passport')">Passport</button>
+                    <button class="category-tab" onclick="filterByCategory('documents')">Documents</button>
+                    <button class="category-tab" onclick="filterByCategory('licenses')">Licenses</button>
+                    <button class="category-tab" onclick="filterByCategory('payments')">Payments</button>
+                    <button class="category-tab" onclick="filterByCategory('utilities')">Utilities</button>
+                </div>
+                <div class="services-grid" id="servicesGrid">
+                    <!-- Services will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- NEWS PORTAL TAB -->
+            <div id="news-tab" class="tab-content">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title"><i class="fas fa-newspaper"></i> Government News Portal</h2>
+                        <p class="page-subtitle">Stay updated with local and federal government changes</p>
+                    </div>
+                    <div class="news-filter-tabs">
+                        <button class="filter-btn active" onclick="filterNews('all')">All News</button>
+                        <button class="filter-btn" onclick="filterNews('federal')">Federal</button>
+                        <button class="filter-btn" onclick="filterNews('provincial')">Provincial</button>
+                        <button class="filter-btn" onclick="filterNews('local')">Local</button>
+                    </div>
+                </div>
+
+                <div class="news-container">
+                    <div class="news-main-section">
+                        <div class="featured-news-card" id="featuredNews">
+                            <!-- Featured news will be populated by JS -->
+                        </div>
+
+                        <div class="news-grid" id="newsGrid">
+                            <!-- News items will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="news-sidebar">
+                        <div class="news-widget">
+                            <h3><i class="fas fa-fire"></i> Trending Updates</h3>
+                            <div class="trending-list" id="trendingNews">
+                                <!-- Trending news -->
+                            </div>
+                        </div>
+
+                        <div class="news-widget">
+                            <h3><i class="fas fa-bullhorn"></i> Policy Changes</h3>
+                            <div class="policy-list" id="policyChanges">
+                                <!-- Policy changes -->
+                            </div>
+                        </div>
+
+                        <div class="news-widget">
+                            <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+                            <div class="events-list" id="upcomingEvents">
+                                <!-- Events -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- DOCUMENTS TAB -->
@@ -888,30 +945,29 @@
                 </div>
             </div>
 
-            <!-- Other Tabs (Placeholder) -->
-            <div id="identity-tab" class="tab-content">
-                <h2 class="page-title"><i class="fas fa-id-card"></i> <span data-i18n="sidebar_identity">Digital Identity</span></h2>
-                <p data-i18n="identity_desc">Digital identity features coming soon...</p>
-            </div>
-
-            <div id="passport-tab" class="tab-content">
-                <h2 class="page-title"><i class="fas fa-passport"></i> <span data-i18n="sidebar_passport">Passport Services</span></h2>
-                <p data-i18n="passport_desc">Passport application and tracking features...</p>
-            </div>
-
-            <div id="payments-tab" class="tab-content">
-                <h2 class="page-title"><i class="fas fa-credit-card"></i> <span data-i18n="sidebar_payments">Payments</span></h2>
-                <p data-i18n="payments_desc">Payment services and billing features...</p>
-            </div>
-
-            <div id="voting-tab" class="tab-content">
-                <h2 class="page-title"><i class="fas fa-vote-yea"></i> <span data-i18n="sidebar_voting">e-Voting</span></h2>
-                <p data-i18n="voting_desc">Digital voting features coming soon...</p>
-            </div>
-
+            <!-- My Applications Tab -->
             <div id="applications-tab" class="tab-content">
-                <h2 class="page-title"><i class="fas fa-file-alt"></i> <span data-i18n="sidebar_applications">My Applications</span></h2>
-                <p data-i18n="applications_desc">Track all your applications here...</p>
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title"><i class="fas fa-file-alt"></i> My Applications</h2>
+                        <p class="page-subtitle">Track and manage all your government service applications</p>
+                    </div>
+                    <button class="btn-primary" onclick="showTab('services')">
+                        <i class="fas fa-plus"></i> New Application
+                    </button>
+                </div>
+
+                <div class="applications-filter">
+                    <button class="filter-btn active" onclick="filterApplications('all')">All</button>
+                    <button class="filter-btn" onclick="filterApplications('pending')">Pending</button>
+                    <button class="filter-btn" onclick="filterApplications('approved')">Approved</button>
+                    <button class="filter-btn" onclick="filterApplications('rejected')">Rejected</button>
+                    <button class="filter-btn" onclick="filterApplications('completed')">Completed</button>
+                </div>
+
+                <div class="applications-list" id="applicationsList">
+                    <!-- Applications will be populated by JavaScript -->
+                </div>
             </div>
 
         </main>
@@ -979,5 +1035,1246 @@
   </script>
     <script src="languages.js"></script>
     <script src="app.js"></script>
+    
+    <!-- Enhanced Citizen Portal Scripts -->
+    <script>
+        // News Portal Data and Functions
+        const newsData = {
+            federal: [
+                {
+                    id: 1,
+                    title: "New Digital Citizenship Card Rollout",
+                    summary: "Federal government announces nationwide rollout of digital citizenship cards with blockchain security.",
+                    content: "The Ministry of Home Affairs has launched a comprehensive digital citizenship program that will replace traditional paper cards. The new system uses blockchain technology to ensure security and prevent fraud.",
+                    date: "2025-01-15",
+                    category: "federal",
+                    priority: "high",
+                    image: "https://via.placeholder.com/400x250?text=Federal+Update",
+                    tags: ["Citizenship", "Digital", "Security"]
+                },
+                {
+                    id: 2,
+                    title: "National Budget 2025-26 Approved",
+                    summary: "Parliament approves Rs. 1.8 trillion budget focusing on infrastructure and digital governance.",
+                    content: "The federal budget for fiscal year 2025-26 has been approved with major allocations for digital infrastructure, smart city projects, and e-governance initiatives.",
+                    date: "2025-01-14",
+                    category: "federal",
+                    priority: "high",
+                    image: "https://via.placeholder.com/400x250?text=Budget+2025",
+                    tags: ["Budget", "Infrastructure", "Policy"]
+                },
+                {
+                    id: 3,
+                    title: "Coordination Hub Launched",
+                    summary: "New coordination platform bridges local and federal government communication gaps.",
+                    content: "The Smart Nagarik platform now includes a coordination hub that enables real-time communication between local municipalities, provincial governments, and federal ministries.",
+                    date: "2025-01-13",
+                    category: "federal",
+                    priority: "high",
+                    image: "https://via.placeholder.com/400x250?text=Coordination+Hub",
+                    tags: ["Coordination", "Platform", "Innovation"]
+                }
+            ],
+            provincial: [
+                {
+                    id: 4,
+                    title: "Bagmati Province Digital Services Expansion",
+                    summary: "Provincial government expands digital services to all 13 districts.",
+                    content: "Bagmati Pradesh has successfully expanded its digital service delivery to all districts, enabling citizens to access government services online.",
+                    date: "2025-01-12",
+                    category: "provincial",
+                    priority: "medium",
+                    image: "https://via.placeholder.com/400x250?text=Bagmati+Province",
+                    tags: ["Provincial", "Services", "Expansion"]
+                },
+                {
+                    id: 5,
+                    title: "Gandaki Province Smart City Initiative",
+                    summary: "Pokhara selected for smart city development under provincial initiative.",
+                    content: "Gandaki Pradesh has selected Pokhara as the first smart city in the province, with plans for integrated digital infrastructure and citizen services.",
+                    date: "2025-01-11",
+                    category: "provincial",
+                    priority: "medium",
+                    image: "https://via.placeholder.com/400x250?text=Smart+City",
+                    tags: ["Smart City", "Development", "Infrastructure"]
+                }
+            ],
+            local: [
+                {
+                    id: 6,
+                    title: "Kathmandu Metropolitan City - Online Permit System",
+                    summary: "KMC launches online building permit and business registration system.",
+                    content: "Kathmandu Metropolitan City has launched a fully digital permit system, reducing processing time from weeks to days.",
+                    date: "2025-01-10",
+                    category: "local",
+                    priority: "medium",
+                    image: "https://via.placeholder.com/400x250?text=KMC+Update",
+                    tags: ["Local", "Permits", "Digital"]
+                },
+                {
+                    id: 7,
+                    title: "Lalitpur Municipality - Waste Management App",
+                    summary: "New mobile app connects citizens with waste collection services.",
+                    content: "Lalitpur Municipality has launched a mobile application that allows citizens to schedule waste collection and track service delivery in real-time.",
+                    date: "2025-01-09",
+                    category: "local",
+                    priority: "low",
+                    image: "https://via.placeholder.com/400x250?text=Waste+Management",
+                    tags: ["Local", "App", "Environment"]
+                },
+                {
+                    id: 8,
+                    title: "Bhaktapur Municipality - Property Tax Online Payment",
+                    summary: "Property tax can now be paid online through Smart Nagarik portal.",
+                    content: "Bhaktapur Municipality has integrated property tax payment into the Smart Nagarik platform, enabling citizens to pay taxes online with instant receipt generation.",
+                    date: "2025-01-08",
+                    category: "local",
+                    priority: "medium",
+                    image: "https://via.placeholder.com/400x250?text=Tax+Payment",
+                    tags: ["Local", "Tax", "Payment"]
+                }
+            ]
+        };
+
+        const servicesData = [
+            { id: 1, name: "Digital Citizenship Card", category: "citizenship", icon: "fa-id-card", description: "Apply for and manage your digital citizenship card" },
+            { id: 2, name: "Passport Application", category: "passport", icon: "fa-passport", description: "Apply for new passport or renew existing one" },
+            { id: 3, name: "Birth Certificate", category: "documents", icon: "fa-certificate", description: "Apply for birth certificate online" },
+            { id: 4, name: "Marriage Certificate", category: "documents", icon: "fa-heart", description: "Register marriage and get certificate" },
+            { id: 5, name: "Death Certificate", category: "documents", icon: "fa-file-alt", description: "Apply for death certificate" },
+            { id: 6, name: "Driving License", category: "licenses", icon: "fa-id-badge", description: "Apply for or renew driving license" },
+            { id: 7, name: "Business Registration", category: "licenses", icon: "fa-briefcase", description: "Register your business online" },
+            { id: 8, name: "Property Registration", category: "documents", icon: "fa-home", description: "Register property documents" },
+            { id: 9, name: "Electricity Bill Payment", category: "payments", icon: "fa-bolt", description: "Pay electricity bills online" },
+            { id: 10, name: "Water Bill Payment", category: "payments", icon: "fa-tint", description: "Pay water supply bills" },
+            { id: 11, name: "Internet Bill Payment", category: "payments", icon: "fa-wifi", description: "Pay internet and telecom bills" },
+            { id: 12, name: "Tax Payment", category: "payments", icon: "fa-file-invoice-dollar", description: "Pay income and property taxes" },
+            { id: 13, name: "Vehicle Registration", category: "licenses", icon: "fa-car", description: "Register new vehicle or transfer ownership" },
+            { id: 14, name: "Building Permit", category: "licenses", icon: "fa-building", description: "Apply for building construction permit" },
+            { id: 15, name: "Health Insurance", category: "utilities", icon: "fa-heartbeat", description: "Apply for government health insurance" },
+            { id: 16, name: "Social Security", category: "utilities", icon: "fa-shield-alt", description: "Register for social security benefits" },
+            { id: 17, name: "Education Certificate Verification", category: "documents", icon: "fa-graduation-cap", description: "Verify educational certificates" },
+            { id: 18, name: "Police Clearance", category: "documents", icon: "fa-user-shield", description: "Apply for police clearance certificate" },
+            { id: 19, name: "Land Survey", category: "documents", icon: "fa-map", description: "Request land survey services" },
+            { id: 20, name: "Grievance Filing", category: "utilities", icon: "fa-comment-alt", description: "File complaints and grievances" }
+        ];
+
+        // Initialize News Portal
+        function initializeNewsPortal() {
+            renderFeaturedNews();
+            renderNewsGrid();
+            renderTrendingNews();
+            renderPolicyChanges();
+            renderUpcomingEvents();
+        }
+
+        function renderFeaturedNews() {
+            const featured = newsData.federal[0];
+            const featuredEl = document.getElementById('featuredNews');
+            if (featuredEl) {
+                featuredEl.innerHTML = `
+                    <div class="featured-image" style="background-image: url('${featured.image}');">
+                        <div class="featured-badge">${featured.category.toUpperCase()}</div>
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-meta">
+                            <span><i class="fas fa-calendar"></i> ${formatDate(featured.date)}</span>
+                            <span><i class="fas fa-tag"></i> ${featured.tags.join(', ')}</span>
+                        </div>
+                        <h2>${featured.title}</h2>
+                        <p>${featured.summary}</p>
+                        <button class="btn-primary" onclick="openNewsDetail(${featured.id})">Read More</button>
+                    </div>
+                `;
+            }
+        }
+
+        function renderNewsGrid() {
+            const gridEl = document.getElementById('newsGrid');
+            if (!gridEl) return;
+            
+            const allNews = [...newsData.federal, ...newsData.provincial, ...newsData.local];
+            gridEl.innerHTML = allNews.map(news => `
+                <div class="news-card" data-category="${news.category}">
+                    <div class="news-card-image" style="background-image: url('${news.image}');">
+                        <span class="news-badge ${news.category}">${news.category}</span>
+                    </div>
+                    <div class="news-card-content">
+                        <div class="news-meta">
+                            <span><i class="fas fa-calendar"></i> ${formatDate(news.date)}</span>
+                            <span class="priority ${news.priority}">${news.priority}</span>
+                        </div>
+                        <h3>${news.title}</h3>
+                        <p>${news.summary}</p>
+                        <div class="news-tags">
+                            ${news.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <button class="btn-text" onclick="openNewsDetail(${news.id})">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTrendingNews() {
+            const trendingEl = document.getElementById('trendingNews');
+            if (!trendingEl) return;
+            
+            const trending = newsData.federal.slice(0, 5);
+            trendingEl.innerHTML = trending.map((news, index) => `
+                <div class="trending-item">
+                    <span class="trend-number">${index + 1}</span>
+                    <div>
+                        <h4 onclick="openNewsDetail(${news.id})">${news.title}</h4>
+                        <small>${formatDate(news.date)}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPolicyChanges() {
+            const policyEl = document.getElementById('policyChanges');
+            if (!policyEl) return;
+            
+            const policies = [
+                { title: "Digital Service Act 2025", date: "2025-01-15", status: "Active" },
+                { title: "Data Protection Regulation", date: "2025-01-10", status: "Draft" },
+                { title: "E-Governance Framework", date: "2025-01-05", status: "Active" }
+            ];
+            
+            policyEl.innerHTML = policies.map(policy => `
+                <div class="policy-item">
+                    <h4>${policy.title}</h4>
+                    <div class="policy-meta">
+                        <span>${formatDate(policy.date)}</span>
+                        <span class="status ${policy.status.toLowerCase()}">${policy.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderUpcomingEvents() {
+            const eventsEl = document.getElementById('upcomingEvents');
+            if (!eventsEl) return;
+            
+            const events = [
+                { title: "Digital Governance Summit", date: "2025-02-01", location: "Kathmandu" },
+                { title: "Citizen Service Fair", date: "2025-02-15", location: "Pokhara" },
+                { title: "E-Government Workshop", date: "2025-02-20", location: "Lalitpur" }
+            ];
+            
+            eventsEl.innerHTML = events.map(event => `
+                <div class="event-item">
+                    <div class="event-date">
+                        <span class="day">${new Date(event.date).getDate()}</span>
+                        <span class="month">${new Date(event.date).toLocaleString('default', { month: 'short' })}</span>
+                    </div>
+                    <div class="event-details">
+                        <h4>${event.title}</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterNews(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const gridEl = document.getElementById('newsGrid');
+            const cards = gridEl.querySelectorAll('.news-card');
+            
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function openNewsDetail(newsId) {
+            const allNews = [...newsData.federal, ...newsData.provincial, ...newsData.local];
+            const news = allNews.find(n => n.id === newsId);
+            if (news) {
+                alert(`News Detail:\n\n${news.title}\n\n${news.content}\n\nDate: ${formatDate(news.date)}\nCategory: ${news.category}`);
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        // Services Functions
+        function initializeServices() {
+            renderServices();
+        }
+
+        function renderServices() {
+            const gridEl = document.getElementById('servicesGrid');
+            if (!gridEl) return;
+            
+            gridEl.innerHTML = servicesData.map(service => `
+                <div class="service-card-item" data-category="${service.category}">
+                    <div class="service-icon">
+                        <i class="fas ${service.icon}"></i>
+                    </div>
+                    <h3>${service.name}</h3>
+                    <p>${service.description}</p>
+                    <button class="btn-primary" onclick="openService('${service.name}')">Access Service</button>
+                </div>
+            `).join('');
+        }
+
+        function filterServices() {
+            const searchTerm = document.getElementById('serviceSearch')?.value.toLowerCase() || '';
+            const cards = document.querySelectorAll('.service-card-item');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        }
+
+        function filterByCategory(category) {
+            document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const cards = document.querySelectorAll('.service-card-item');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function openService(serviceName) {
+            showToast(`Opening ${serviceName}...`);
+            // In real implementation, this would navigate to the service page
+        }
+
+        // Enhanced Dashboard Functions
+        function enhanceDashboard() {
+            updateDashboardStats();
+            loadRecentActivity();
+            loadImportantNotices();
+            loadPopularServices();
+        }
+
+        function updateDashboardStats() {
+            // Animate counters
+            document.querySelectorAll('.counter').forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 16);
+            });
+        }
+
+        function loadRecentActivity() {
+            const activityEl = document.getElementById('recentActivity');
+            if (!activityEl) return;
+            
+            const activities = [
+                { type: 'application', text: 'Passport application submitted', time: '2 hours ago', status: 'pending' },
+                { type: 'document', text: 'Birth certificate approved', time: '1 day ago', status: 'completed' },
+                { type: 'update', text: 'Profile information updated', time: '2 days ago', status: 'completed' },
+                { type: 'news', text: 'Read federal government update', time: '3 days ago', status: 'completed' },
+                { type: 'application', text: 'Driving license renewal in progress', time: '4 days ago', status: 'pending' }
+            ];
+            
+            activityEl.innerHTML = activities.map(activity => `
+                <div class="activity-item ${activity.status}">
+                    <div class="activity-icon">
+                        <i class="fas fa-${getActivityIcon(activity.type)}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>${activity.text}</p>
+                        <small>${activity.time}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadImportantNotices() {
+            const noticesEl = document.getElementById('importantNotices');
+            if (!noticesEl) return;
+            
+            const notices = [
+                { title: 'Coordination Hub Now Live', date: '2025-01-15', priority: 'high' },
+                { title: 'New Digital Services Available', date: '2025-01-14', priority: 'high' },
+                { title: 'Federal-Local Coordination Updates', date: '2025-01-13', priority: 'medium' },
+                { title: 'Government News Portal Launched', date: '2025-01-12', priority: 'medium' }
+            ];
+            
+            noticesEl.innerHTML = notices.map(notice => `
+                <div class="notice-item ${notice.priority}" onclick="showTab('news')" style="cursor: pointer;">
+                    <div class="notice-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div>
+                        <h4>${notice.title}</h4>
+                        <small>${formatDate(notice.date)}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadPopularServices() {
+            const servicesEl = document.getElementById('popularServices');
+            if (!servicesEl) return;
+            
+            const popular = servicesData.slice(0, 6);
+            servicesEl.innerHTML = popular.map(service => `
+                <div class="service-shortcut" onclick="openService('${service.name}')">
+                    <i class="fas ${service.icon}"></i>
+                    <span>${service.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function getActivityIcon(type) {
+            const icons = {
+                'application': 'file-alt',
+                'document': 'file-check',
+                'payment': 'credit-card',
+                'update': 'edit',
+                'news': 'newspaper'
+            };
+            return icons[type] || 'circle';
+        }
+
+        // Applications Management
+        const applicationsData = [
+            {
+                id: 'APP-2025-001',
+                service: 'Passport Application',
+                status: 'pending',
+                submittedDate: '2025-01-10',
+                lastUpdate: '2025-01-12',
+                description: 'New passport application for international travel',
+                progress: 60
+            },
+            {
+                id: 'APP-2025-002',
+                service: 'Birth Certificate',
+                status: 'approved',
+                submittedDate: '2025-01-05',
+                lastUpdate: '2025-01-08',
+                description: 'Birth certificate application for child',
+                progress: 100
+            },
+            {
+                id: 'APP-2025-003',
+                service: 'Driving License Renewal',
+                status: 'pending',
+                submittedDate: '2025-01-08',
+                lastUpdate: '2025-01-09',
+                description: 'Renewal of driving license',
+                progress: 40
+            },
+            {
+                id: 'APP-2024-045',
+                service: 'Citizenship Card',
+                status: 'completed',
+                submittedDate: '2024-12-15',
+                lastUpdate: '2024-12-28',
+                description: 'Digital citizenship card application',
+                progress: 100
+            },
+            {
+                id: 'APP-2025-004',
+                service: 'Property Registration',
+                status: 'rejected',
+                submittedDate: '2025-01-03',
+                lastUpdate: '2025-01-07',
+                description: 'Property registration application',
+                progress: 0,
+                rejectionReason: 'Missing required documents'
+            }
+        ];
+
+        function initializeApplications() {
+            renderApplications();
+        }
+
+        function renderApplications(filter = 'all') {
+            const listEl = document.getElementById('applicationsList');
+            if (!listEl) return;
+
+            let filtered = applicationsData;
+            if (filter !== 'all') {
+                filtered = applicationsData.filter(app => app.status === filter);
+            }
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No applications found</h3>
+                        <p>You don't have any ${filter === 'all' ? '' : filter} applications yet.</p>
+                        <button class="btn-primary" onclick="showTab('services')">Browse Services</button>
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = filtered.map(app => `
+                <div class="application-card" data-status="${app.status}">
+                    <div class="application-header">
+                        <div class="application-id">
+                            <i class="fas fa-hashtag"></i>
+                            <strong>${app.id}</strong>
+                        </div>
+                        <span class="status-badge ${app.status}">${app.status.charAt(0).toUpperCase() + app.status.slice(1)}</span>
+                    </div>
+                    <div class="application-body">
+                        <h3>${app.service}</h3>
+                        <p>${app.description}</p>
+                        <div class="application-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${app.progress}%"></div>
+                            </div>
+                            <span>${app.progress}% Complete</span>
+                        </div>
+                        ${app.rejectionReason ? `<div class="rejection-notice"><i class="fas fa-exclamation-triangle"></i> ${app.rejectionReason}</div>` : ''}
+                    </div>
+                    <div class="application-footer">
+                        <div class="application-dates">
+                            <span><i class="fas fa-calendar-plus"></i> Submitted: ${formatDate(app.submittedDate)}</span>
+                            <span><i class="fas fa-calendar-check"></i> Updated: ${formatDate(app.lastUpdate)}</span>
+                        </div>
+                        <div class="application-actions">
+                            <button class="btn-text" onclick="viewApplicationDetails('${app.id}')">View Details</button>
+                            ${app.status === 'pending' ? `<button class="btn-text" onclick="trackApplication('${app.id}')">Track</button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterApplications(status) {
+            document.querySelectorAll('.applications-filter .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderApplications(status);
+        }
+
+        function viewApplicationDetails(appId) {
+            const app = applicationsData.find(a => a.id === appId);
+            if (app) {
+                alert(`Application Details:\n\nID: ${app.id}\nService: ${app.service}\nStatus: ${app.status}\nProgress: ${app.progress}%\n\nSubmitted: ${formatDate(app.submittedDate)}\nLast Update: ${formatDate(app.lastUpdate)}`);
+            }
+        }
+
+        function trackApplication(appId) {
+            showToast(`Tracking application ${appId}...`);
+            // In real implementation, this would show detailed tracking
+        }
+
+        // Enhanced AI Assistant
+        function enhanceAIAssistant() {
+            // Update AI context for coordination theme
+            if (window.callGeminiAPI) {
+                const originalCall = window.callGeminiAPI;
+                window.callGeminiAPI = function(message) {
+                    const enhancedMessage = `You are a helpful assistant for Smart Nagarik citizen portal. The platform focuses on coordination between local and federal government. Help citizens with government services, track applications, and explain coordination features. User question: ${message}`;
+                    return originalCall(enhancedMessage);
+                };
+            }
+        }
+
+        // Ensure showTab function handles news tab
+        const originalShowTab = window.showTab;
+        window.showTab = function(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            const targetTab = document.getElementById(`${tabName}-tab`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+            
+            // Activate corresponding nav button
+            const navBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn => 
+                btn.getAttribute('onclick')?.includes(`showTab('${tabName}')`)
+            );
+            if (navBtn) {
+                navBtn.classList.add('active');
+            }
+            
+            // Initialize content if needed
+            if (tabName === 'news' && document.getElementById('newsGrid') && !document.getElementById('newsGrid').innerHTML) {
+                initializeNewsPortal();
+            }
+            if (tabName === 'services' && document.getElementById('servicesGrid') && !document.getElementById('servicesGrid').innerHTML) {
+                initializeServices();
+            }
+            if (tabName === 'applications' && document.getElementById('applicationsList') && !document.getElementById('applicationsList').innerHTML) {
+                initializeApplications();
+            }
+            if (tabName === 'dashboard') {
+                enhanceDashboard();
+            }
+            
+            // Call original if exists
+            if (originalShowTab && typeof originalShowTab === 'function') {
+                originalShowTab(tabName);
+            }
+        };
+
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for app.js to load
+            setTimeout(() => {
+                initializeNewsPortal();
+                initializeServices();
+                initializeApplications();
+                enhanceDashboard();
+                enhanceAIAssistant();
+            }, 500);
+        });
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('successToast');
+            const messageEl = document.getElementById('toastMessage');
+            if (toast && messageEl) {
+                messageEl.textContent = message;
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 3000);
+            }
+        }
+    </script>
+    
+    <style>
+        /* News Portal Styles */
+        .news-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .featured-news-card {
+            background: var(--card-bg, #fff);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .featured-image {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-red, #dc2626);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .featured-content {
+            padding: 2rem;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .featured-content h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary, #1a1a1a);
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .news-card {
+            background: var(--card-bg, #fff);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .news-card-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .news-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .news-badge.federal { background: #dc2626; }
+        .news-badge.provincial { background: #2563eb; }
+        .news-badge.local { background: #10b981; }
+
+        .news-card-content {
+            padding: 1.5rem;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .priority {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .priority.high { background: #fee2e2; color: #dc2626; }
+        .priority.medium { background: #dbeafe; color: #2563eb; }
+        .priority.low { background: #d1fae5; color: #10b981; }
+
+        .news-card-content h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary, #1a1a1a);
+        }
+
+        .news-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: #f3f4f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .news-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .news-widget {
+            background: var(--card-bg, #fff);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .news-widget h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary, #1a1a1a);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .trending-item {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trend-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue, #2563eb);
+            min-width: 2rem;
+        }
+
+        .trending-item h4 {
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary, #1a1a1a);
+        }
+
+        .policy-item, .event-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .policy-item:last-child, .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .policy-item h4 {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .policy-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+
+        .status.active { background: #d1fae5; color: #10b981; }
+        .status.draft { background: #fef3c7; color: #f59e0b; }
+
+        .event-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .event-date {
+            background: var(--primary-blue, #2563eb);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            min-width: 3rem;
+        }
+
+        .event-date .day {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .event-date .month {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .event-details h4 {
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .news-filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-blue, #2563eb);
+            color: white;
+            border-color: var(--primary-blue, #2563eb);
+        }
+
+        /* Services Grid Styles */
+        .services-category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-tab.active {
+            background: var(--primary-blue, #2563eb);
+            color: white;
+            border-color: var(--primary-blue, #2563eb);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card-item {
+            background: var(--card-bg, #fff);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--primary-red, #dc2626), var(--primary-blue, #2563eb));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .service-card-item h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary, #1a1a1a);
+        }
+
+        .service-card-item p {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 1024px) {
+            .news-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .news-sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Applications Tab Styles */
+        .applications-filter {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .applications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .application-card {
+            background: var(--card-bg, #fff);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+
+        .application-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .application-card[data-status="pending"] {
+            border-left-color: #f59e0b;
+        }
+
+        .application-card[data-status="approved"] {
+            border-left-color: #10b981;
+        }
+
+        .application-card[data-status="completed"] {
+            border-left-color: #2563eb;
+        }
+
+        .application-card[data-status="rejected"] {
+            border-left-color: #dc2626;
+        }
+
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .application-id {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #f59e0b;
+        }
+
+        .status-badge.approved {
+            background: #d1fae5;
+            color: #10b981;
+        }
+
+        .status-badge.completed {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .status-badge.rejected {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .application-body h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary, #1a1a1a);
+        }
+
+        .application-body p {
+            color: #666;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .application-progress {
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue, #2563eb), var(--primary-red, #dc2626));
+            transition: width 0.3s;
+        }
+
+        .application-progress span {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .rejection-notice {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .application-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .application-dates {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .application-dates span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .application-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary, #1a1a1a);
+        }
+
+        /* Coordination Card Styles */
+        .coordination-summary {
+            margin: 1rem 0;
+        }
+
+        .coordination-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .coordination-item:last-child {
+            border-bottom: none;
+        }
+
+        .coordination-item span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .coordination-item strong {
+            font-size: 1.25rem;
+            color: var(--text-primary, #1a1a1a);
+        }
+
+        /* Orange stat card */
+        .stat-card.orange {
+            background: linear-gradient(135deg, #f97316, #fb923c);
+        }
+
+        @media (max-width: 768px) {
+            .application-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .application-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
 </body>
 </html>
