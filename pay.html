@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Payments | Nepal e-Governance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Payment Page Specific Styles */
+        .payment-page-container {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 50%, #f0f4f8 100%);
+        }
+
+        body.dark-mode .payment-page-container {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg, #1e40af 0%, #dc2626 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 0 0 1.5rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .payment-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-header p {
+            opacity: 0.95;
+            font-size: 1rem;
+        }
+
+        .payment-main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .filter-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-input input,
+        .filter-input select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            color: #1e293b;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .filter-input input,
+        body.dark-mode .filter-input select {
+            background: #1e293b;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        .filter-input input:focus,
+        .filter-input select:focus {
+            outline: none;
+            border-color: #1e40af;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .services-payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-payment-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        body.dark-mode .service-payment-card {
+            background: #1e293b;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.2);
+            border-color: #1e40af;
+        }
+
+        .service-payment-card-header {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        body.dark-mode .service-payment-card-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .service-payment-card-header i {
+            font-size: 3rem;
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+
+        .service-payment-card-header h3 {
+            color: #1e293b;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        body.dark-mode .service-payment-card-header h3 {
+            color: #f8fafc;
+        }
+
+        .service-payment-card-body {
+            padding: 1.5rem;
+        }
+
+        .service-description {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        body.dark-mode .service-description {
+            color: #94a3b8;
+        }
+
+        .service-amount {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        body.dark-mode .service-amount {
+            border-bottom-color: #334155;
+        }
+
+        .amount-label {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .amount-value {
+            color: #dc2626;
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .pay-service-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+            border: none;
+            border-radius: 0.75rem;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .pay-service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.3);
+        }
+
+        .payment-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        body.dark-mode .payment-modal-content {
+            background: #1e293b;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .payment-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        body.dark-mode .payment-modal-header {
+            border-bottom-color: #334155;
+        }
+
+        .payment-modal-header h2 {
+            color: #1e293b;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        body.dark-mode .payment-modal-header h2 {
+            color: #f8fafc;
+        }
+
+        .close-modal-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #64748b;
+            cursor: pointer;
+        }
+
+        .payment-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .payment-form-group label {
+            color: #e2e8f0;
+        }
+
+        .payment-form-group input,
+        .payment-form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .payment-form-group input,
+        body.dark-mode .payment-form-group select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        .payment-summary {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        body.dark-mode .payment-summary {
+            background: #0f172a;
+            border-color: #334155;
+        }
+
+        .payment-summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .payment-summary-row.total {
+            border-top: 2px solid #e2e8f0;
+            padding-top: 0.75rem;
+            margin-top: 0.75rem;
+            color: #dc2626;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        body.dark-mode .payment-summary-row.total {
+            border-top-color: #334155;
+        }
+
+        .payment-modal-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-cancel {
+            padding: 0.75rem;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 0.75rem;
+            color: #1e293b;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        body.dark-mode .btn-cancel {
+            background: #334155;
+            color: #f8fafc;
+        }
+
+        .btn-confirm-payment {
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            border: none;
+            border-radius: 0.75rem;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .payment-main {
+                padding: 1rem;
+            }
+
+            .payment-header {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .services-payment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Pattern -->
+    <div class="bg-pattern"></div>
+
+    <!-- Payment Toast -->
+    <div id="paymentToast" class="payment-toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Payment successful!</span>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-modal-content">
+            <div class="payment-modal-header">
+                <h2 id="modalTitle">Complete Payment</h2>
+                <button class="close-modal-btn" onclick="closePaymentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="paymentForm" onsubmit="processPayment(event)">
+                <div class="payment-form-group">
+                    <label>Service Name</label>
+                    <input type="text" id="serviceName" readonly style="cursor: not-allowed; opacity: 0.7;">
+                </div>
+
+                <div class="payment-form-group">
+                    <label>Amount (NPR)</label>
+                    <input type="number" id="paymentAmount" readonly style="cursor: not-allowed; opacity: 0.7;">
+                </div>
+
+                <div class="payment-form-group">
+                    <label>Payment Method *</label>
+                    <select id="paymentMethodSelect" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="credit_card">Credit/Debit Card</option>
+                        <option value="mobilebanking">Mobile Banking</option>
+                        <option value="netbanking">Net Banking</option>
+                        <option value="wallet">Government e-Wallet</option>
+                        <option value="cheque">Cheque</option>
+                    </select>
+                </div>
+
+                <div class="payment-form-group">
+                    <label>Name on Card/Account *</label>
+                    <input type="text" placeholder="Enter full name" required>
+                </div>
+
+                <div class="payment-form-group">
+                    <label>Email *</label>
+                    <input type="email" placeholder="your.email@example.com" required>
+                </div>
+
+                <div class="payment-summary">
+                    <div class="payment-summary-row">
+                        <span>Service Fee:</span>
+                        <span id="summaryAmount">NPR 0</span>
+                    </div>
+                    <div class="payment-summary-row">
+                        <span>Processing Fee:</span>
+                        <span>NPR 25</span>
+                    </div>
+                    <div class="payment-summary-row total">
+                        <span>Total Amount:</span>
+                        <span id="totalAmount">NPR 25</span>
+                    </div>
+                </div>
+
+                <div class="payment-modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closePaymentModal()">Cancel</button>
+                    <button type="submit" class="btn-confirm-payment">Pay Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="payment-page-container">
+        <!-- Header -->
+        <div style="width: 100%; position: fixed; top: 0; left: 0; right: 0; z-index: 100;">
+            <div class="payment-header">
+                <h1>
+                    <i class="fas fa-wallet"></i>
+                    Government Payments
+                </h1>
+                <p>Pay taxes, bills, and other government service fees securely</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="payment-main" style="margin-top: 150px;">
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search services..." onkeyup="filterServices()">
+                </div>
+                <div class="filter-input">
+                    <i class="fas fa-filter"></i>
+                    <select id="categoryFilter" onchange="filterServices()">
+                        <option value="">All Categories</option>
+                        <option value="taxes">Taxes</option>
+                        <option value="utilities">Utilities & Bills</option>
+                        <option value="documents">Documents & Permits</option>
+                        <option value="education">Education</option>
+                        <option value="health">Health Services</option>
+                        <option value="registration">Registration & Licensing</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="services-payment-grid" id="servicesGrid">
+                <!-- Services will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="languages.js"></script>
+    <script>
+        // Sample Services Data
+        const services = [
+            {
+                id: 1,
+                name: 'Income Tax Payment',
+                category: 'taxes',
+                description: 'Pay your annual income tax online',
+                amount: 5000,
+                icon: 'fa-file-invoice-dollar',
+                popular: true
+            },
+            {
+                id: 2,
+                name: 'Property Tax',
+                category: 'taxes',
+                description: 'Property tax payment for residential/commercial',
+                amount: 8500,
+                icon: 'fa-home',
+                popular: true
+            },
+            {
+                id: 3,
+                name: 'Electricity Bill',
+                category: 'utilities',
+                description: 'Pay your monthly electricity bill',
+                amount: 2500,
+                icon: 'fa-lightbulb',
+                popular: false
+            },
+            {
+                id: 4,
+                name: 'Water Bill',
+                category: 'utilities',
+                description: 'Water supply bill payment',
+                amount: 1500,
+                icon: 'fa-tint',
+                popular: false
+            },
+            {
+                id: 5,
+                name: 'Passport Application Fee',
+                category: 'documents',
+                description: 'Passport application and processing fee',
+                amount: 3500,
+                icon: 'fa-passport',
+                popular: true
+            },
+            {
+                id: 6,
+                name: 'Driving License Renewal',
+                category: 'documents',
+                description: 'Driving license renewal and examination',
+                amount: 1800,
+                icon: 'fa-id-card',
+                popular: false
+            },
+            {
+                id: 7,
+                name: 'School Registration Fee',
+                category: 'education',
+                description: 'School registration and admission fee',
+                amount: 5000,
+                icon: 'fa-graduation-cap',
+                popular: false
+            },
+            {
+                id: 8,
+                name: 'University Exam Fee',
+                category: 'education',
+                description: 'University examination fee payment',
+                amount: 3000,
+                icon: 'fa-book',
+                popular: false
+            },
+            {
+                id: 9,
+                name: 'Health Insurance Premium',
+                category: 'health',
+                description: 'Annual health insurance premium',
+                amount: 4500,
+                icon: 'fa-heartbeat',
+                popular: false
+            },
+            {
+                id: 10,
+                name: 'Medical Examination Fee',
+                category: 'health',
+                description: 'Government medical examination fee',
+                amount: 2000,
+                icon: 'fa-stethoscope',
+                popular: false
+            },
+            {
+                id: 11,
+                name: 'Business License Registration',
+                category: 'registration',
+                description: 'Business license registration and renewal',
+                amount: 6000,
+                icon: 'fa-briefcase',
+                popular: true
+            },
+            {
+                id: 12,
+                name: 'Vehicle Registration',
+                category: 'registration',
+                description: 'Vehicle registration and taxing fee',
+                amount: 7500,
+                icon: 'fa-car',
+                popular: true
+            }
+        ];
+
+        // Initialize Page
+        function initializePage() {
+            renderServices(services);
+        }
+
+        // Render Services
+        function renderServices(data) {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
+
+            data.forEach(service => {
+                const card = document.createElement('div');
+                card.className = 'service-payment-card';
+                card.innerHTML = `
+                    <div class="service-payment-card-header">
+                        <i class="fas ${service.icon}"></i>
+                        <h3>${service.name}</h3>
+                    </div>
+                    <div class="service-payment-card-body">
+                        <p class="service-description">${service.description}</p>
+                        <div class="service-amount">
+                            <span class="amount-label">Fee Amount:</span>
+                            <span class="amount-value">NPR ${service.amount.toLocaleString()}</span>
+                        </div>
+                        <button class="pay-service-btn" onclick="openPaymentModal('${service.name}', ${service.amount})">
+                            <i class="fas fa-credit-card"></i> Pay Now
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Services
+        function filterServices() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+
+            const filtered = services.filter(service => {
+                const matchesSearch = service.name.toLowerCase().includes(searchTerm) || 
+                                    service.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = category === '' || service.category === category;
+                return matchesSearch && matchesCategory;
+            });
+
+            renderServices(filtered);
+        }
+
+        // Open Payment Modal
+        function openPaymentModal(serviceName, amount) {
+            document.getElementById('serviceName').value = serviceName;
+            document.getElementById('paymentAmount').value = amount;
+            document.getElementById('summaryAmount').textContent = `NPR ${amount.toLocaleString()}`;
+            document.getElementById('totalAmount').textContent = `NPR ${(amount + 25).toLocaleString()}`;
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        // Close Payment Modal
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.getElementById('paymentForm').reset();
+        }
+
+        // Process Payment
+        function processPayment(event) {
+            event.preventDefault();
+
+            const serviceName = document.getElementById('serviceName').value;
+            const amount = document.getElementById('paymentAmount').value;
+
+            closePaymentModal();
+            showToast('Processing payment for ' + serviceName + '...', 'default');
+
+            setTimeout(() => {
+                showToast('✓ Payment of NPR ' + amount + ' processed successfully!', 'success');
+            }, 2000);
+        }
+
+        // Show Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('paymentToast');
+            const msgElement = document.getElementById('toastMessage');
+
+            msgElement.textContent = message;
+            toast.classList.remove('success', 'error');
+            toast.classList.add(type);
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closePaymentModal();
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializePage);
+
+        console.log('🇳🇵 Government Payment Portal Loaded');
+    </script>
+</body>
+</html>

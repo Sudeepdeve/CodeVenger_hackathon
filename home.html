@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नागरिक App | Nepal e-Governance Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Pattern -->
+    <div class="bg-pattern"></div>
+    
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen hidden">
+            <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h2 style="color: white; margin-bottom: 1rem;" data-i18n="loading_title">Nepal e-Governance</h2>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p style="color: rgba(255,255,255,0.7); margin-top: 1rem;" data-i18n="loading_message">Loading your services...</p>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="toast hidden">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage" data-i18n="toast_success">Success!</span>
+    </div>
+
+    <!-- Profile Setup Modal -->
+    <div id="profileSetupModal" class="modal hidden">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-circle"></i> <span data-i18n="profile_complete">Complete Your Profile</span></h2>
+                <button class="close-btn" onclick="closeProfileSetup()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="profile-setup-content">
+                <div class="profile-setup-step active" data-step="1">
+                    <h3 data-i18n="profile_personal">Personal Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="profile_full_name_en">Full Name (English) *</label>
+                            <input type="text" id="fullNameEn" class="form-input" placeholder="Ram Bahadur Thapa">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="profile_full_name_np">पूरा नाम (नेपाली) *</label>
+                            <input type="text" id="fullNameNp" class="form-input" placeholder="राम बहादुर थापा">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="profile_dob">Date of Birth *</label>
+                            <input type="date" id="dob" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="profile_gender">Gender *</label>
+                            <select id="gender" class="form-input">
+                                <option value="">Select</option>
+                                <option value="male">Male / पुरुष</option>
+                                <option value="female">Female / महिला</option>
+                                <option value="other">Other / अन्य</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="profile_blood">Blood Group</label>
+                            <select id="bloodGroup" class="form-input">
+                                <option value="">Select</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="profile_mobile">Mobile Number *</label>
+                            <input type="tel" id="mobile" class="form-input" placeholder="+977 98XXXXXXXX">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-setup-step" data-step="2">
+                    <h3 data-i18n="profile_photo">Upload Profile Picture</h3>
+                    <div class="profile-photo-upload">
+                        <div class="photo-preview" id="photoPreview">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <input type="file" id="profilePhoto" accept="image/*" style="display: none;">
+                        <button class="btn-primary" onclick="document.getElementById('profilePhoto').click()">
+                            <i class="fas fa-camera"></i> <span data-i18n="choose_photo">Choose Photo</span>
+                        </button>
+                        <button class="btn-secondary" onclick="capturePhoto()">
+                            <i class="fas fa-video"></i> <span data-i18n="use_camera">Use Camera</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="profile-setup-step" data-step="3">
+                    <h3 data-i18n="profile_address">Address Information</h3>
+                    <div class="form-group">
+                        <label data-i18n="profile_province">Province *</label>
+                        <select id="province" class="form-input" onchange="loadDistricts()">
+                            <option value="">Select Province</option>
+                            <option value="1">Koshi Pradesh</option>
+                            <option value="2">Madhesh Pradesh</option>
+                            <option value="3">Bagmati Pradesh</option>
+                            <option value="4">Gandaki Pradesh</option>
+                            <option value="5">Lumbini Pradesh</option>
+                            <option value="6">Karnali Pradesh</option>
+                            <option value="7">Sudurpashchim Pradesh</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="profile_district">District *</label>
+                            <select id="district" class="form-input" onchange="loadMunicipalities()">
+                                <option value="">Select District</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Municipality *</label>
+                            <select id="municipality" class="form-input">
+                                <option value="">Select Municipality</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ward No. *</label>
+                            <input type="number" id="ward" class="form-input" min="1" placeholder="1-33">
+                        </div>
+                        <div class="form-group">
+                            <label>Tole/Street</label>
+                            <input type="text" id="tole" class="form-input" placeholder="Enter tole name">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-setup-step" data-step="4">
+                    <h3>Identity Documents</h3>
+                    <div class="form-group">
+                        <label>Citizenship Number</label>
+                        <input type="text" id="citizenshipNo" class="form-input" placeholder="1234-5678-9012">
+                    </div>
+                    <div class="form-group">
+                        <label>Passport Number (if available)</label>
+                        <input type="text" id="passportNo" class="form-input" placeholder="12345678">
+                    </div>
+                    <div class="form-group">
+                        <label>National ID Number</label>
+                        <input type="text" id="nationalId" class="form-input" placeholder="Generated automatically" disabled>
+                    </div>
+                    <div class="security-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <p data-i18n="security_notice">All your personal data is encrypted and stored securely using blockchain technology.</p>
+                    </div>
+                </div>
+
+                <div class="profile-setup-navigation">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousStep()" disabled>
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="step-indicators">
+                        <span class="step-dot active" data-step="1"></span>
+                        <span class="step-dot" data-step="2"></span>
+                        <span class="step-dot" data-step="3"></span>
+                        <span class="step-dot" data-step="4"></span>
+                    </div>
+                    <button class="btn-primary" id="nextBtn" onclick="nextStep()">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="header-left">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1 data-i18n="app_name">Smart Nepal</h1>
+                        <p data-i18n="app_subtitle">Nepal e-Governance</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="search-header">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search services, documents..." id="globalSearch" data-i18n-placeholder="header_search">
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <button class="icon-btn" onclick="toggleNotifications()" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationCount">3</span>
+                </button>
+                <button class="icon-btn" onclick="toggleTopLanguage()" title="Toggle Language" id="langToggle" style="position: relative;">
+                    <i class="fas fa-language"></i>
+                    <span id="currentLanguage" style="position: absolute; right: 0.25rem; bottom: 0.25rem; font-weight: 700; font-size: 0.7rem; background: var(--primary-blue); color: white; width: 1rem; height: 1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;">EN</span>
+                </button>
+                <div class="user-profile-btn" onclick="toggleUserMenu()">
+                    <div class="user-avatar" id="headerAvatar">NP</div>
+                    <div class="user-info">
+                        <span id="headerUserName">Guest User</span>
+                        <small id="headerUserRole">Citizen</small>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Menu Dropdown -->
+        <div id="userMenu" class="dropdown-menu hidden">
+            <div class="dropdown-header">
+                <div class="menu-avatar" id="menuAvatar">NP</div>
+                <div>
+                    <h4 id="menuUserName">Guest User</h4>
+                    <p id="menuUserEmail">guest@nagarik.gov.np</p>
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item" onclick="showTab('profile')">
+                <i class="fas fa-user"></i> <span data-i18n="header_profile">My Profile</span>
+            </button>
+            <button class="dropdown-item" onclick="showTab('settings')">
+                <i class="fas fa-cog"></i> <span data-i18n="header_settings">Settings</span>
+            </button>
+            <button class="dropdown-item" onclick="showTab('security')">
+                <i class="fas fa-shield-alt"></i> <span data-i18n="header_security">Security & Privacy</span>
+            </button>
+            <button class="dropdown-item" onclick="generateQR()">
+                <i class="fas fa-qrcode"></i> Generate QR Code
+            </button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item" onclick="contactSupport()">
+                <i class="fas fa-question-circle"></i> <span data-i18n="header_help">Help & Support</span>
+            </button>
+            <button class="dropdown-item text-danger" onclick="window.location.href='index.html'">
+                <i class="fas fa-sign-out-alt"></i> <span data-i18n="header_logout">Logout</span>
+            </button>
+        </div>
+
+        <!-- Notifications Dropdown -->
+        <div id="notificationsPanel" class="dropdown-menu notifications-panel hidden">
+                <div class="dropdown-header">
+                <h3><i class="fas fa-bell"></i> <span data-i18n="notifications_title">Notifications</span></h3>
+                <button class="btn-text" onclick="markAllRead()" data-i18n="notif_all">Mark all read</button>
+            </div>
+            <div class="notifications-list" id="notificationsList">
+                <!-- Notifications populated by JS -->
+            </div>
+            <div class="dropdown-footer">
+                <button class="btn-text" onclick="showTab('notifications')" data-i18n="view_all">View All Notifications</button>
+            </div>
+        </div>
+
+        <!-- Language Selector -->
+        <div id="languageSelector" class="dropdown-menu hidden">
+            <div class="dropdown-header">
+                <h4><i class="fas fa-language"></i> <span data-i18n="header_language">Change Language</span></h4>
+            </div>
+            <button class="dropdown-item" onclick="changeAppLanguage('english')">
+                <i class="fas fa-circle-half-stroke"></i> <span data-i18n="lang_english">English</span>
+            </button>
+            <button class="dropdown-item" onclick="changeAppLanguage('nepali')">
+                <i class="fas fa-circle-half-stroke"></i> <span data-i18n="lang_nepali">नेपाली (Nepali)</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="nav-menu">
+                <button class="nav-btn active" onclick="showTab('dashboard')">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="sidebar_dashboard">Dashboard</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('ai-assistant')">
+                    <i class="fas fa-robot"></i>
+                    <span data-i18n="sidebar_ai">AI Assistant</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('services')">
+                    <i class="fas fa-briefcase"></i>
+                    <span data-i18n="sidebar_services">All Services</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('identity')">
+                    <i class="fas fa-id-card"></i>
+                    <span data-i18n="sidebar_identity">Digital Identity</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('passport')">
+                    <i class="fas fa-passport"></i>
+                    <span data-i18n="sidebar_passport">Passport</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('documents')">
+                    <i class="fas fa-folder"></i>
+                    <span data-i18n="sidebar_documents">Documents</span>
+                </button>
+                <button class="nav-btn" onclick="window.location.href='pay.html'">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('voting')">
+                    <i class="fas fa-vote-yea"></i>
+                    <span data-i18n="sidebar_voting">Voting</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('applications')">
+                    <i class="fas fa-file-alt"></i>
+                    <span data-i18n="sidebar_applications">My Applications</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('profile')">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('settings')">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-section">
+                <h4><i class="fas fa-star"></i> Quick Actions</h4>
+                <button class="quick-action-btn" onclick="quickApply('citizenship')">
+                    <i class="fas fa-id-card"></i> <span data-i18n="quick_apply_citizenship">Apply Citizenship</span>
+                </button>
+                <button class="quick-action-btn" onclick="quickApply('passport')">
+                    <i class="fas fa-passport"></i> <span data-i18n="quick_apply_passport">Renew Passport</span>
+                </button>
+                <button class="quick-action-btn" onclick="quickPay()">
+                    <i class="fas fa-bolt"></i> <span data-i18n="quick_apply_payments">Pay Bills</span>
+                </button>
+            </div>
+
+            <div class="contact-card">
+                <h4><i class="fas fa-phone"></i> Emergency Contact</h4>
+                <a href="tel:100" class="contact-item">
+                    <div class="contact-icon red">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <span data-i18n="contact_police">Police</span>
+                        <strong>100</strong>
+                    </div>
+                </a>
+                <a href="tel:1660-01-55555" class="contact-item">
+                    <div class="contact-icon blue">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div>
+                        <span data-i18n="contact_support">Support</span>
+                        <strong>1660-01-55555</strong>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <p data-i18n="footer_version">Version 3.0.0</p>
+                <p data-i18n="footer_copyright">© 2025 Nepal Government</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title"><span data-i18n="dashboard_welcome">Welcome back, Citizen!</span></h2>
+                        <p class="page-subtitle" data-i18n="dashboard_subtitle">Here's what's happening with your services today</p>
+                    </div>
+                    <button class="btn-primary" onclick="showTab('ai-assistant')" data-i18n="dashboard_ask_ai">
+                        <i class="fas fa-robot"></i> <span data-i18n="dashboard_ask_ai">Ask AI Assistant</span>
+                    </button>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card blue gradient-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="counter" data-target="2500000">0</h3>
+                            <p data-i18n="dashboard_stats_citizens">Active Citizens</p>
+                            <small class="trend"><i class="fas fa-arrow-up"></i> 12% this month</small>
+                        </div>
+                    </div>
+                    <div class="stat-card red gradient-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="counter" data-target="4">0</h3>
+                            <p data-i18n="dashboard_stats_applications">My Applications</p>
+                            <small class="trend pending">2 pending review</small>
+                        </div>
+                    </div>
+                    <div class="stat-card purple gradient-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="counter" data-target="15000000">0</h3>
+                            <p data-i18n="dashboard_stats_documents">Documents Issued</p>
+                            <small class="trend"><i class="fas fa-arrow-up"></i> 8% growth</small>
+                        </div>
+                    </div>
+                    <div class="stat-card green gradient-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><span class="counter" data-target="94">0</span>%</h3>
+                            <p data-i18n="dashboard_stats_satisfaction">Satisfaction Rate</p>
+                            <small class="trend"><i class="fas fa-star"></i> Excellent</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Cards Grid -->
+                <div class="action-cards-grid">
+                    <div class="action-card apply-services">
+                        <div class="action-card-header">
+                            <h3 data-i18n="dashboard_apply">Apply for Services</h3>
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <p data-i18n="dashboard_apply_desc">Quick access to 120+ government services</p>
+                        <div class="action-buttons">
+                            <button onclick="showTab('services')" data-i18n="dashboard_browse">Browse Services</button>
+                            <button onclick="showTab('ai-assistant')" class="secondary" data-i18n="dashboard_ask_ai">Ask AI</button>
+                        </div>
+                    </div>
+
+                    <div class="action-card track-status">
+                        <div class="action-card-header">
+                            <h3 data-i18n="dashboard_track">Track Applications</h3>
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <p data-i18n="dashboard_track_desc">Real-time status of your applications</p>
+                        <div class="quick-track">
+                            <input type="text" placeholder="Enter application ID..." class="track-input">
+                            <button onclick="trackApplication()"><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="action-card payments">
+                        <div class="action-card-header">
+                            <h3 data-i18n="dashboard_payments">Pending Payments</h3>
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="payment-summary">
+                            <div class="payment-item">
+                                <span>Electricity</span>
+                                <strong>Rs. 2,450</strong>
+                            </div>
+                            <div class="payment-item">
+                                <span>Water</span>
+                                <strong>Rs. 890</strong>
+                            </div>
+                        </div>
+                        <button onclick="showTab('payments')" class="pay-all-btn" data-i18n="dashboard_payments">Pay All - Rs. 3,340</button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity & Notifications Row -->
+                <div class="dashboard-row">
+                        <div class="card activity-card">
+                        <div class="card-header">
+                                <h3><i class="fas fa-clock"></i> <span data-i18n="dashboard_recent">Recent Activity</span></h3>
+                            <button class="btn-text" onclick="showTab('applications')" data-i18n="view_all">View All</button>
+                        </div>
+                        <div class="activity-timeline" id="recentActivity">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                        <div class="card notifications-card">
+                        <div class="card-header">
+                                <h3><i class="fas fa-bell"></i> <span data-i18n="dashboard_notices">Important Notices</span></h3>
+                            <button class="btn-text" onclick="showTab('notifications')" data-i18n="view_all">View All</button>
+                        </div>
+                        <div class="notices-list" id="importantNotices">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services Shortcuts -->
+                    <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bolt"></i> <span data-i18n="dashboard_popular">Popular Services</span></h3>
+                    </div>
+                    <div class="services-shortcuts" id="popularServices">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Assistant Tab -->
+            <div id="ai-assistant-tab" class="tab-content">
+                <div class="ai-container">
+                    <div class="ai-sidebar">
+                            <h3 data-i18n="chat_history">Chat History</h3>
+                            <button class="new-chat-btn" onclick="newChat()">
+                                <i class="fas fa-plus"></i> <span data-i18n="new_chat">New Chat</span>
+                            </button>
+                        <div class="chat-history-list" id="chatHistory">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="ai-main">
+                        <div class="ai-header-enhanced">
+                            <div class="ai-icon-large">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                                <div class="ai-title-section">
+                                <h2 data-i18n="ai_title">AI-Powered Service Assistant</h2>
+                                <p data-i18n="ai_subtitle">बुद्धिमान सहायक - Ask anything about government services</p>
+                            </div>
+                            <div class="ai-actions">
+                                <button class="icon-btn" onclick="toggleVoiceMode()" title="Voice Mode">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <button class="icon-btn" onclick="shareChat()" title="Share Chat">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                                <button class="icon-btn" onclick="clearChat()" title="Clear Chat">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="ai-features-bar">
+                            <div class="feature-chip">
+                                <i class="fas fa-clock"></i> 24/7 Available
+                            </div>
+                            <div class="feature-chip">
+                                <i class="fas fa-language"></i> Bilingual
+                            </div>
+                            <div class="feature-chip">
+                                <i class="fas fa-shield-alt"></i> Secure
+                            </div>
+                            <div class="feature-chip">
+                                <i class="fas fa-brain"></i> AI-Powered
+                            </div>
+                        </div>
+
+                        <div class="chat-container-enhanced">
+                            <div class="chat-messages-enhanced" id="chatMessages">
+                                <div class="chat-welcome">
+                                    <div class="welcome-icon">
+                                        <i class="fas fa-hands-helping"></i>
+                                    </div>
+                                    <h3>Namaste! 🙏 How can I help you today?</h3>
+                                    <p>I can assist you with citizenship, passport, licenses, and all government services</p>
+                                    
+                                    <div class="suggested-prompts">
+                                        <button class="prompt-chip" onclick="sendPrompt('How do I apply for citizenship?')">
+                                            📝 <span data-i18n="ai_citizenship">Apply for Citizenship</span>
+                                        </button>
+                                        <button class="prompt-chip" onclick="sendPrompt('Track my passport application')">
+                                            🔍 <span data-i18n="ai_passport">Track Passport</span>
+                                        </button>
+                                        <button class="prompt-chip" onclick="sendPrompt('How to pay bills online?')">
+                                            💳 <span data-i18n="ai_bills">Pay Bills</span>
+                                        </button>
+                                        <button class="prompt-chip" onclick="sendPrompt('नागरिकताको लागि कसरी आवेदन दिने?')">
+                                            🇳🇵 <span data-i18n="ai_nepali">नेपालीमा सोध्नुहोस्</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="chat-input-container-enhanced">
+                                    <div class="input-wrapper">
+                                    <button class="input-action-btn" onclick="attachFile()" title="Attach File">
+                                        <i class="fas fa-paperclip"></i>
+                                    </button>
+                                    <input 
+                                        type="text" 
+                                        id="userInput" 
+                                        class="chat-input-enhanced" 
+                                            data-i18n-placeholder="ai_placeholder"
+                                    />
+                                    <button class="input-action-btn voice-btn-enhanced" onclick="startVoiceRecognition()" id="voiceBtn">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    <button class="send-btn-enhanced" onclick="sendMessage()">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                <div class="input-footer">
+                                    <span class="input-tip">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <span data-i18n="input_tip">Press Enter to send</span>
+                                    </span>
+                                    <span class="ai-status">
+                                        <span class="status-dot"></span> <span data-i18n="ai_status_ready">AI Ready</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALL 120+ SERVICES TAB -->
+            <div id="services-tab" class="tab-content">
+                <!-- Will be populated by JavaScript with all 120 services -->
+            </div>
+
+            <!-- DOCUMENTS TAB -->
+            <div id="documents-tab" class="tab-content">
+                <!-- Will be populated by JavaScript with all documents -->
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content">
+                <div class="profile-container">
+                    <div class="profile-header-banner">
+                        <button class="edit-banner-btn" onclick="editBanner()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="profile-main">
+                        <div class="profile-sidebar-section">
+                            <div class="profile-photo-section">
+                                <div class="profile-photo-large" id="profilePhotoLarge">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <button class="edit-photo-btn" onclick="editProfilePhoto()">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                            </div>
+                            <h2 id="profileFullName">Guest User</h2>
+                            <p class="profile-id">ID: <strong id="profileNationalId">NP-xxxx-xxxx</strong></p>
+                            <div class="profile-stats-mini">
+                                <div>
+                                    <strong>4</strong>
+                                    <span>Applications</span>
+                                </div>
+                                <div>
+                                    <strong>12</strong>
+                                    <span>Documents</span>
+                                </div>
+                                <div>
+                                    <strong>98%</strong>
+                                    <span>Verified</span>
+                                </div>
+                            </div>
+                            <button class="btn-primary full-width" onclick="generateQR()">
+                                <i class="fas fa-qrcode"></i> Generate QR Code
+                            </button>
+                        </div>
+
+                        <div class="profile-content-section">
+                                <div class="profile-tabs">
+                                <button class="profile-tab-btn active" onclick="showProfileTab('personal')" data-i18n="profile_tab_personal">
+                                    Personal Info
+                                </button>
+                                <button class="profile-tab-btn" onclick="showProfileTab('contact')" data-i18n="profile_tab_contact">
+                                    Contact
+                                </button>
+                                <button class="profile-tab-btn" onclick="showProfileTab('documents')" data-i18n="profile_tab_documents">
+                                    Documents
+                                </button>
+                                <button class="profile-tab-btn" onclick="showProfileTab('activity')" data-i18n="profile_tab_activity">
+                                    Activity Log
+                                </button>
+                            </div>
+
+                            <div class="profile-tab-content active" id="profile-personal-tab">
+                                <div class="info-section">
+                                    <div class="section-header">
+                                        <h3 data-i18n="profile_personal">Basic Information</h3>
+                                        <button class="btn-secondary" onclick="editProfile()">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    </div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <label>Full Name</label>
+                                            <p id="infoFullName">-</p>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>नेपाली नाम</label>
+                                            <p id="infoFullNameNp">-</p>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Date of Birth</label>
+                                            <p id="infoDob">-</p>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Gender</label>
+                                            <p id="infoGender">-</p>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Blood Group</label>
+                                            <p id="infoBloodGroup">-</p>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Citizenship No.</label>
+                                            <p id="infoCitizenship">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="info-section">
+                                    <div class="section-header">
+                                        <h3 data-i18n="profile_address">Address Information</h3>
+                                        <button class="btn-secondary" onclick="editAddress()">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    </div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <label>Province</label>
+                                            <p id="infoProvince">-</p>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>District</label>
+                                            <p id="infoDistrict">-</p>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Municipality</label>
+                                            <p id="infoMunicipality">-</p>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Ward No.</label>
+                                            <p id="infoWard">-</p>
+                                        </div>
+                                        <div class="info-item full-width">
+                                            <label>Complete Address</label>
+                                            <p id="infoFullAddress">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-content">
+                <h2 class="page-title"><i class="fas fa-cog"></i> <span data-i18n="settings_title">Settings</span></h2>
+                
+                <div class="settings-container">
+                    <div class="settings-sidebar">
+                        <button class="settings-nav-btn active" data-section="general">
+                            <i class="fas fa-sliders-h"></i> General
+                        </button>
+                        <button class="settings-nav-btn" data-section="appearance">
+                            <i class="fas fa-palette"></i> Appearance
+                        </button>
+                        <button class="settings-nav-btn" data-section="notifications">
+                            <i class="fas fa-bell"></i> <span data-i18n="settings_notifications">Notifications</span>
+                        </button>
+                        <button class="settings-nav-btn" data-section="privacy">
+                            <i class="fas fa-shield-alt"></i> Privacy
+                        </button>
+                        <button class="settings-nav-btn" data-section="security">
+                            <i class="fas fa-lock"></i> Security
+                        </button>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- General Settings -->
+                        <div class="settings-section active" id="general-settings">
+                            <h3 data-i18n="general_settings">General Settings</h3>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Auto-save Forms</label>
+                                    <p>Automatically save form progress</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoSave" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Remember Login</label>
+                                    <p>Stay logged in on this device</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="rememberLogin" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Other settings sections -->
+                        <div class="settings-section" id="appearance-settings">
+                            <h3>Appearance</h3>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Theme</label>
+                                    <p>Choose your preferred theme</p>
+                                </div>
+                                <div class="theme-selector">
+                                    <button class="theme-btn active" onclick="toggleTheme()">
+                                        <i class="fas fa-sun"></i> Light
+                                    </button>
+                                    <button class="theme-btn" onclick="toggleTheme()">
+                                        <i class="fas fa-moon"></i> Dark
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-section" id="notifications-settings">
+                            <h3>Notification Preferences</h3>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Push Notifications</label>
+                                    <p>Receive alerts for important updates</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-section" id="privacy-settings">
+                            <h3>Privacy & Data</h3>
+                            <div class="privacy-actions">
+                                <button class="btn-secondary" onclick="downloadMyData()">
+                                    <i class="fas fa-download"></i> Download My Data
+                                </button>
+                                <button class="btn-secondary" onclick="requestDataDeletion()">
+                                    <i class="fas fa-trash"></i> Request Data Deletion
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="settings-section" id="security-settings">
+                            <h3 data-i18n="settings_security">Security Settings</h3>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Two-Factor Authentication</label>
+                                    <p>Add extra security to your account</p>
+                                </div>
+                                <button class="btn-primary" onclick="setup2FA()">
+                                    <i class="fas fa-shield-alt"></i> Enable 2FA
+                                </button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Biometric Login</label>
+                                    <p>Use fingerprint or face ID to login</p>
+                                </div>
+                                <button class="btn-primary" onclick="setupBiometric()">
+                                    <i class="fas fa-fingerprint"></i> Setup Biometric
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Tabs (Placeholder) -->
+            <div id="identity-tab" class="tab-content">
+                <h2 class="page-title"><i class="fas fa-id-card"></i> <span data-i18n="sidebar_identity">Digital Identity</span></h2>
+                <p data-i18n="identity_desc">Digital identity features coming soon...</p>
+            </div>
+
+            <div id="passport-tab" class="tab-content">
+                <h2 class="page-title"><i class="fas fa-passport"></i> <span data-i18n="sidebar_passport">Passport Services</span></h2>
+                <p data-i18n="passport_desc">Passport application and tracking features...</p>
+            </div>
+
+            <div id="payments-tab" class="tab-content">
+                <h2 class="page-title"><i class="fas fa-credit-card"></i> <span data-i18n="sidebar_payments">Payments</span></h2>
+                <p data-i18n="payments_desc">Payment services and billing features...</p>
+            </div>
+
+            <div id="voting-tab" class="tab-content">
+                <h2 class="page-title"><i class="fas fa-vote-yea"></i> <span data-i18n="sidebar_voting">e-Voting</span></h2>
+                <p data-i18n="voting_desc">Digital voting features coming soon...</p>
+            </div>
+
+            <div id="applications-tab" class="tab-content">
+                <h2 class="page-title"><i class="fas fa-file-alt"></i> <span data-i18n="sidebar_applications">My Applications</span></h2>
+                <p data-i18n="applications_desc">Track all your applications here...</p>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Language Modal -->
+    <div id="languageModal" class="modal hidden">
+                <div class="modal-content">
+            <h3 data-i18n="language_modal_title">Choose Response Language</h3>
+            <p class="modal-subtitle" data-i18n="language_modal_subtitle">भाषा छान्नुहोस् / Select Language</p>
+            <div class="language-options">
+                <button class="language-btn blue" onclick="selectLanguage('english')">
+                    <i class="fas fa-flag"></i>
+                    <span>English</span>
+                </button>
+                <button class="language-btn red" onclick="selectLanguage('nepali')">
+                    <i class="fas fa-flag"></i>
+                    <span>नेपाली</span>
+                </button>
+            </div>
+            <button class="btn-secondary full-width" onclick="closeLanguageModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Camera Modal for Profile Photo --> 
+    <div id="cameraModal" class="modal hidden">
+                <div class="modal-content large">
+            <div class="modal-header">
+                <h3><i class="fas fa-camera"></i> <span data-i18n="camera_title">Capture Photo</span></h3>
+                <button class="close-btn" onclick="closeCameraModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="camera-container">
+                <video id="cameraVideo" autoplay playsinline></video>
+                <canvas id="cameraCanvas" style="display: none;"></canvas>
+                <div class="camera-controls">
+                                <button class="btn-primary" onclick="capturePhotoNow()">
+                        <i class="fas fa-camera"></i> <span data-i18n="camera_capture">Capture</span>
+                    </button>
+                    <button class="btn-secondary" onclick="closeCameraModal()">
+                        <span data-i18n="camera_cancel">Cancel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- background music -->
+    <audio id="bg-music" autoplay >
+    <source src="back.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+  
+    document.addEventListener("click", () => {
+      setTimeout(() => {
+        const music = document.getElementById("bg-music");
+        music.muted = false; // unmute after delay
+        music.play().catch(err => {
+          console.log("Playback failed:", err);
+        });
+      }, 1000); 
+    }, { once: true }); 
+  </script>
+    <script src="languages.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
