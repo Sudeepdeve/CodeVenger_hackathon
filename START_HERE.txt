@@ -1,0 +1,46 @@
+╔══════════════════════════════════════════════════════════════╗
+║     🚀 NEPAL E-GOVERNANCE - QUICK START GUIDE                ║
+╚══════════════════════════════════════════════════════════════╝
+
+✅ BACKEND SERVER IS NOW RUNNING!
+
+The server is running on: http://localhost:3000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 STEP-BY-STEP INSTRUCTIONS:
+
+1. ✅ Backend Server - ALREADY RUNNING (started automatically)
+
+2. 🌐 Open Admin Panel:
+   → Double-click: proviencegov.html
+   → OR open in browser: file:///Users/neeraj/Downloads/uploded file 2/proviencegov.html
+
+3. 👥 Open Citizen Portal:
+   → Double-click: home.html  
+   → OR open in browser: file:///Users/neeraj/Downloads/uploded file 2/home.html
+
+4. ✨ Test It:
+   → In Admin Panel: Publish a notice
+   → In Citizen Portal: See it appear instantly!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 TO STOP THE SERVER:
+   → Press Ctrl + C in the terminal where it's running
+
+🔧 TO RESTART THE SERVER:
+   → Open terminal in this folder
+   → Type: npm start
+   → Press Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 MORE HELP:
+   → See HOW_TO_RUN.md for detailed instructions
+   → See README_BACKEND.md for API documentation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 Everything is ready! Just open the HTML files in your browser!
+

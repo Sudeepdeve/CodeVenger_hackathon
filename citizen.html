@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Portal - Smart Nagarik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f1f5f9;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #8b5cf6;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-logout {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: #f1f5f9;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .service-card:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-3px);
+        }
+
+        .service-card i {
+            font-size: 2rem;
+            color: #8b5cf6;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #f1f5f9;
+        }
+
+        .requests-list {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .request-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .request-item:last-child {
+            border-bottom: none;
+        }
+
+        .request-info {
+            flex: 1;
+        }
+
+        .request-title {
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.25rem;
+        }
+
+        .request-date {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .badge-info {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .btn-primary {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <i class="fas fa-user-circle"></i>
+            Smart Nagarik
+        </div>
+        <div class="user-info">
+            <span>Citizen Portal</span>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Welcome to Citizen Portal</h1>
+            <p>Your Gateway to Government Services</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="stat-value">5</div>
+                <div class="stat-label">Active Requests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Completed Services</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-id-card"></i>
+                </div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Documents Ready</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="stat-value">2</div>
+                <div class="stat-label">New Notifications</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Available Services</h2>
+        <div class="services-grid">
+            <a href="#" class="service-card">
+                <i class="fas fa-baby"></i>
+                <span>Birth Certificate</span>
+            </a>
+            <a href="#" class="service-card">
+                <i class="fas fa-id-card"></i>
+                <span>Citizenship</span>
+            </a>
+            <a href="#" class="service-card">
+                <i class="fas fa-briefcase"></i>
+                <span>Business License</span>
+            </a>
+            <a href="#" class="service-card">
+                <i class="fas fa-home"></i>
+                <span>Land Registration</span>
+            </a>
+            <a href="#" class="service-card">
+                <i class="fas fa-car"></i>
+                <span>Vehicle License</span>
+            </a>
+            <a href="#" class="service-card">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Education Records</span>
+            </a>
+            <a href="#" class="service-card">
+                <i class="fas fa-heartbeat"></i>
+                <span>Health Services</span>
+            </a>
+            <a href="#" class="service-card">
+                <i class="fas fa-file-invoice"></i>
+                <span>Tax Payment</span>
+            </a>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <button class="btn-primary">
+                <i class="fas fa-plus-circle"></i>
+                New Service Request
+            </button>
+        </div>
+
+        <h2 class="section-title">My Requests</h2>
+        <div class="requests-list">
+            <div class="request-item">
+                <div class="request-info">
+                    <div class="request-title">Birth Certificate Application</div>
+                    <div class="request-date">Submitted on Jan 15, 2025</div>
+                </div>
+                <span class="badge badge-info">Processing</span>
+            </div>
+            <div class="request-item">
+                <div class="request-info">
+                    <div class="request-title">Business License Renewal</div>
+                    <div class="request-date">Submitted on Jan 10, 2025</div>
+                </div>
+                <span class="badge badge-warning">Pending Payment</span>
+            </div>
+            <div class="request-item">
+                <div class="request-info">
+                    <div class="request-title">Citizenship Certificate</div>
+                    <div class="request-date">Submitted on Jan 5, 2025</div>
+                </div>
+                <span class="badge badge-success">Ready for Pickup</span>
+            </div>
+            <div class="request-item">
+                <div class="request-info">
+                    <div class="request-title">Vehicle Registration</div>
+                    <div class="request-date">Submitted on Dec 28, 2024</div>
+                </div>
+                <span class="badge badge-success">Completed</span>
+            </div>
+            <div class="request-item">
+                <div class="request-info">
+                    <div class="request-title">Land Ownership Certificate</div>
+                    <div class="request-date">Submitted on Dec 20, 2024</div>
+                </div>
+                <span class="badge badge-success">Completed</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Backend Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .success { color: #10b981; }
+        .error { color: #dc2626; }
+        .warning { color: #f59e0b; }
+        button {
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #1e3a8a; }
+        pre {
+            background: #1e293b;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Backend Connection Test</h1>
+    
+    <div class="test-box">
+        <h2>Test 1: Server Health</h2>
+        <button onclick="testHealth()">Test Health</button>
+        <div id="healthResult"></div>
+    </div>
+    
+    <div class="test-box">
+        <h2>Test 2: Get All Notices</h2>
+        <button onclick="testNotices()">Get Notices</button>
+        <div id="noticesResult"></div>
+    </div>
+    
+    <div class="test-box">
+        <h2>Test 3: Create Test Notice</h2>
+        <button onclick="createTestNotice()">Create Test Notice</button>
+        <div id="createResult"></div>
+    </div>
+    
+    <div class="test-box">
+        <h2>Test 4: Check home.html Display</h2>
+        <button onclick="window.open('home.html', '_blank')">Open home.html</button>
+        <p>Open home.html and check if notices appear in "Important Notices" section</p>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3000/api';
+        
+        async function testHealth() {
+            const result = document.getElementById('healthResult');
+            result.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `<p class="success">✅ Server is running!</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">❌ Server returned error</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Cannot connect to server: ${error.message}</p><p>Make sure server is running: npm start</p>`;
+            }
+        }
+        
+        async function testNotices() {
+            const result = document.getElementById('noticesResult');
+            result.innerHTML = '<p>Loading...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/notices`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const count = data.data ? data.data.length : 0;
+                    result.innerHTML = `<p class="success">✅ Found ${count} notices</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">❌ Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Cannot fetch notices: ${error.message}</p>`;
+            }
+        }
+        
+        async function createTestNotice() {
+            const result = document.getElementById('createResult');
+            result.innerHTML = '<p>Creating...</p>';
+            
+            const testNotice = {
+                title: 'Test Notice - ' + new Date().toLocaleTimeString(),
+                desc: 'This is a test notice created from test page',
+                priority: 'high',
+                icon: 'fa-bell',
+                publishedBy: 'Test User'
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/notices`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testNotice)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `<p class="success">✅ Notice created successfully!</p><pre>${JSON.stringify(data, null, 2)}</pre><p>Now refresh home.html to see it!</p>`;
+                } else {
+                    result.innerHTML = `<p class="error">❌ Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Cannot create notice: ${error.message}</p>`;
+            }
+        }
+        
+        // Auto-test on load
+        window.addEventListener('load', () => {
+            testHealth();
+            setTimeout(testNotices, 500);
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Province Government - Admin Panel | Coordination Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .admin-header {
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            color: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .admin-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .admin-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .admin-nav-btn {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .admin-nav-btn:hover {
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+        .admin-nav-btn.active {
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            color: white;
+            border-color: transparent;
+        }
+        .admin-section {
+            display: none;
+            animation: fadeInUp 0.4s ease;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        .notice-form {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e40af;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .priority-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .priority-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: 2px solid transparent;
+        }
+        .priority-badge.high {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border-color: #dc2626;
+        }
+        .priority-badge.medium {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border-color: #f59e0b;
+        }
+        .priority-badge.low {
+            background: rgba(100, 116, 139, 0.1);
+            color: #64748b;
+            border-color: #64748b;
+        }
+        .priority-badge.selected {
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            color: white;
+            border-color: transparent;
+        }
+        .icon-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .icon-option {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+        .icon-option:hover {
+            border-color: #1e40af;
+            background: rgba(30, 64, 175, 0.1);
+        }
+        .icon-option.selected {
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            color: white;
+            border-color: transparent;
+        }
+        .notices-list {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .notice-card {
+            background: rgba(100, 116, 139, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #1e40af;
+            transition: all 0.3s ease;
+        }
+        .notice-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .notice-card.high {
+            border-left-color: #dc2626;
+        }
+        .notice-card.medium {
+            border-left-color: #f59e0b;
+        }
+        .notice-card.low {
+            border-left-color: #64748b;
+        }
+        .notice-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .notice-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        .notice-card-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+        .notice-card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .btn-small {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        .btn-edit {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+        .btn-edit:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+        .btn-delete:hover {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-publish {
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .btn-publish:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .stat-card p {
+            color: #64748b;
+            font-weight: 600;
+        }
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 0.5rem;
+            color: #10b981;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .sync-status.syncing {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .coordination-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+        .coordination-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(100, 116, 139, 0.05);
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .coordination-item-info h4 {
+            margin-bottom: 0.25rem;
+        }
+        .coordination-item-info p {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        .toast {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            border: 2px solid #10b981;
+        }
+        .toast.hidden {
+            display: none;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        body.dark-mode .notice-form,
+        body.dark-mode .notices-list,
+        body.dark-mode .stat-card,
+        body.dark-mode .coordination-panel {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #334155;
+            color: #f8fafc;
+        }
+        body.dark-mode .form-group label,
+        body.dark-mode .notice-card-title {
+            color: #f8fafc;
+        }
+        body.dark-mode .form-group input,
+        body.dark-mode .form-group textarea,
+        body.dark-mode .form-group select {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: #334155;
+            color: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <div class="admin-container">
+        <!-- Admin Header -->
+        <div class="admin-header">
+            <h1>
+                <i class="fas fa-landmark"></i>
+                Province Government Admin Panel
+            </h1>
+            <p>Coordination Hub - Manage Notices & Data for Citizen Portal</p>
+            <div class="sync-status" id="syncStatus">
+                <i class="fas fa-sync-alt"></i>
+                <span>Data Synced with Citizen Portal</span>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="admin-nav">
+            <button class="admin-nav-btn active" onclick="showSection('notices')">
+                <i class="fas fa-bullhorn"></i> Publish Notices
+            </button>
+            <button class="admin-nav-btn" onclick="showSection('manage')">
+                <i class="fas fa-list"></i> Manage Notices
+            </button>
+            <button class="admin-nav-btn" onclick="showSection('coordination')">
+                <i class="fas fa-network-wired"></i> Coordination Hub
+            </button>
+            <button class="admin-nav-btn" onclick="showSection('stats')">
+                <i class="fas fa-chart-bar"></i> Statistics
+            </button>
+            <button class="admin-nav-btn" onclick="window.open('home.html', '_blank')">
+                <i class="fas fa-external-link-alt"></i> View Citizen Portal
+            </button>
+        </div>
+
+        <!-- Publish Notices Section -->
+        <div id="noticesSection" class="admin-section active">
+            <div class="notice-form">
+                <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-plus-circle"></i> Publish New Notice
+                </h2>
+                <form id="noticeForm" onsubmit="publishNotice(event)">
+                    <div class="form-group">
+                        <label>Notice Title *</label>
+                        <input type="text" id="noticeTitle" required placeholder="Enter notice title">
+                    </div>
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea id="noticeDesc" required placeholder="Enter notice description"></textarea>
+                    </div>
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Priority *</label>
+                            <div class="priority-badges">
+                                <span class="priority-badge high" onclick="selectPriority('high', this)">High</span>
+                                <span class="priority-badge medium selected" onclick="selectPriority('medium', this)">Medium</span>
+                                <span class="priority-badge low" onclick="selectPriority('low', this)">Low</span>
+                            </div>
+                            <input type="hidden" id="noticePriority" value="medium">
+                        </div>
+                        <div class="form-group">
+                            <label>Icon</label>
+                            <select id="noticeIcon" class="form-group select">
+                                <option value="fa-bullhorn">Bullhorn</option>
+                                <option value="fa-bell">Bell</option>
+                                <option value="fa-exclamation-triangle">Warning</option>
+                                <option value="fa-info-circle">Info</option>
+                                <option value="fa-check-circle">Check</option>
+                                <option value="fa-newspaper">News</option>
+                                <option value="fa-calendar">Calendar</option>
+                                <option value="fa-file-alt">Document</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Link (Optional)</label>
+                        <input type="url" id="noticeLink" placeholder="https://example.com">
+                    </div>
+                    <button type="submit" class="btn-publish">
+                        <i class="fas fa-paper-plane"></i> Publish Notice
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Manage Notices Section -->
+        <div id="manageSection" class="admin-section">
+            <div class="notices-list">
+                <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-list"></i> Published Notices
+                </h2>
+                <div id="noticesList">
+                    <!-- Notices will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Coordination Hub Section -->
+        <div id="coordinationSection" class="admin-section">
+            <div class="coordination-panel">
+                <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-network-wired"></i> Federal-Local Coordination
+                </h2>
+                <div class="coordination-item">
+                    <div class="coordination-item-info">
+                        <h4>Data Synchronization</h4>
+                        <p>Real-time sync with federal government systems</p>
+                    </div>
+                    <button class="btn-small btn-edit" onclick="syncData()">
+                        <i class="fas fa-sync"></i> Sync Now
+                    </button>
+                </div>
+                <div class="coordination-item">
+                    <div class="coordination-item-info">
+                        <h4>Notice Distribution</h4>
+                        <p>Notices published here appear instantly on citizen portal</p>
+                    </div>
+                    <span style="color: #10b981; font-weight: 600;">
+                        <i class="fas fa-check-circle"></i> Active
+                    </span>
+                </div>
+                <div class="coordination-item">
+                    <div class="coordination-item-info">
+                        <h4>Cross-Government Communication</h4>
+                        <p>Share notices with other provinces and federal level</p>
+                    </div>
+                    <button class="btn-small btn-edit" onclick="shareWithFederal()">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Section -->
+        <div id="statsSection" class="admin-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="totalNotices">0</h3>
+                    <p>Total Notices Published</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="activeNotices">0</h3>
+                    <p>Active Notices</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="highPriority">0</h3>
+                    <p>High Priority Notices</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="lastSync">-</h3>
+                    <p>Last Sync Time</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Backend API Configuration
+        const API_BASE_URL = 'http://localhost:3000/api';
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkBackendConnection();
+            loadNotices();
+            updateStats();
+            updateSyncStatus();
+        });
+        
+        // Check backend connection
+        async function checkBackendConnection() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`);
+                const data = await response.json();
+                if (data.success) {
+                    console.log('✅ Backend connected:', data.message);
+                }
+            } catch (error) {
+                console.error('❌ Backend connection failed:', error);
+                showToast('⚠️ Backend server not running. Please start the server (npm start)', 'error');
+            }
+        }
+
+        // Section Navigation
+        function showSection(section) {
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(section + 'Section').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Priority Selection
+        function selectPriority(priority, element) {
+            document.querySelectorAll('.priority-badge').forEach(b => b.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('noticePriority').value = priority;
+        }
+
+        // Publish Notice
+        async function publishNotice(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('noticeForm');
+            const editId = form.dataset.editId;
+            const noticeData = {
+                title: document.getElementById('noticeTitle').value,
+                desc: document.getElementById('noticeDesc').value,
+                priority: document.getElementById('noticePriority').value,
+                icon: document.getElementById('noticeIcon').value,
+                link: document.getElementById('noticeLink').value || null,
+                publishedBy: 'Province Government'
+            };
+
+            try {
+                let response;
+                if (editId) {
+                    // Update existing notice
+                    response = await fetch(`${API_BASE_URL}/notices/${editId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(noticeData)
+                    });
+                } else {
+                    // Create new notice
+                    response = await fetch(`${API_BASE_URL}/notices`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(noticeData)
+                    });
+                }
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(editId ? 'Notice updated successfully!' : 'Notice published successfully! All portals will see it instantly.');
+                    
+                    // Reset form
+                    form.reset();
+                    delete form.dataset.editId;
+                    document.querySelectorAll('.priority-badge').forEach(b => b.classList.remove('selected'));
+                    document.querySelector('.priority-badge.medium').classList.add('selected');
+                    document.getElementById('noticePriority').value = 'medium';
+                    
+                    // Reload notices list
+                    await loadNotices();
+                    await updateStats();
+                    updateSyncStatus();
+                } else {
+                    showToast('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error publishing notice:', error);
+                showToast('Failed to publish notice. Is the backend server running?', 'error');
+            }
+        }
+
+        // Load Notices
+        async function loadNotices() {
+            const noticesList = document.getElementById('noticesList');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/notices`);
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.error || 'Failed to load notices');
+                }
+
+                const notices = result.data || [];
+
+                if (notices.length === 0) {
+                    noticesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <h3>No notices published yet</h3>
+                            <p>Start by publishing your first notice!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                noticesList.innerHTML = notices.map(notice => `
+                    <div class="notice-card ${notice.priority}">
+                        <div class="notice-card-header">
+                            <div>
+                                <div class="notice-card-title">${notice.title}</div>
+                                <div class="notice-card-meta">
+                                    <span><i class="fas fa-calendar"></i> ${new Date(notice.date || notice.createdAt).toLocaleDateString()}</span>
+                                    <span><i class="fas fa-tag"></i> ${notice.priority.toUpperCase()}</span>
+                                    <span><i class="fas fa-user"></i> ${notice.publishedBy || 'Admin'}</span>
+                                </div>
+                            </div>
+                            <div class="notice-card-actions">
+                                <button class="btn-small btn-edit" onclick="editNotice(${notice.id})">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn-small btn-delete" onclick="deleteNotice(${notice.id})">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        <p style="color: #64748b; margin-top: 0.5rem;">${notice.desc || notice.description}</p>
+                        ${notice.link ? `<a href="${notice.link}" target="_blank" style="color: #1e40af; text-decoration: none; margin-top: 0.5rem; display: inline-block;"><i class="fas fa-external-link-alt"></i> View Link</a>` : ''}
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading notices:', error);
+                noticesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error loading notices</h3>
+                        <p>Please make sure the backend server is running (npm start)</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Delete Notice
+        async function deleteNotice(id) {
+            if (!confirm('Are you sure you want to delete this notice?')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/notices/${id}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('Notice deleted successfully!');
+                    await loadNotices();
+                    await updateStats();
+                } else {
+                    showToast('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting notice:', error);
+                showToast('Failed to delete notice. Is the backend server running?', 'error');
+            }
+        }
+
+        // Edit Notice
+        async function editNotice(id) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/notices/${id}`);
+                const result = await response.json();
+                
+                if (!result.success || !result.data) {
+                    showToast('Notice not found', 'error');
+                    return;
+                }
+
+                const notice = result.data;
+
+                // Fill form with notice data
+                document.getElementById('noticeTitle').value = notice.title;
+                document.getElementById('noticeDesc').value = notice.desc || notice.description;
+                document.getElementById('noticePriority').value = notice.priority;
+                document.getElementById('noticeIcon').value = notice.icon || 'fa-bullhorn';
+                document.getElementById('noticeLink').value = notice.link || '';
+                
+                // Update priority badges
+                document.querySelectorAll('.priority-badge').forEach(b => b.classList.remove('selected'));
+                const priorityBadge = document.querySelector(`.priority-badge.${notice.priority}`);
+                if (priorityBadge) priorityBadge.classList.add('selected');
+                
+                // Store edit ID for update
+                document.getElementById('noticeForm').dataset.editId = id;
+                
+                // Scroll to form
+                showSection('notices');
+                document.getElementById('noticeForm').scrollIntoView({ behavior: 'smooth' });
+                
+                showToast('Notice loaded for editing. Make changes and publish to update.');
+            } catch (error) {
+                console.error('Error loading notice:', error);
+                showToast('Failed to load notice for editing', 'error');
+            }
+        }
+
+        // Update Statistics
+        async function updateStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/stats`);
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    const stats = result.data;
+                    document.getElementById('totalNotices').textContent = stats.total || 0;
+                    document.getElementById('activeNotices').textContent = stats.active || 0;
+                    document.getElementById('highPriority').textContent = stats.highPriority || 0;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                document.getElementById('totalNotices').textContent = '0';
+                document.getElementById('activeNotices').textContent = '0';
+                document.getElementById('highPriority').textContent = '0';
+            }
+        }
+
+        // Sync Status
+        function updateSyncStatus() {
+            const syncStatus = document.getElementById('syncStatus');
+            syncStatus.classList.add('syncing');
+            syncStatus.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> <span>Syncing...</span>';
+            
+            setTimeout(() => {
+                syncStatus.classList.remove('syncing');
+                syncStatus.innerHTML = '<i class="fas fa-check-circle"></i> <span>Data Synced with Citizen Portal</span>';
+                document.getElementById('lastSync').textContent = new Date().toLocaleTimeString();
+            }, 1000);
+        }
+
+        // Sync Data
+        function syncData() {
+            updateSyncStatus();
+            showToast('Data synchronized successfully!');
+        }
+
+        // Share with Federal
+        function shareWithFederal() {
+            showToast('Notice shared with federal government and other provinces!');
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            
+            // Update toast style based on type
+            if (type === 'error') {
+                toast.style.borderColor = '#dc2626';
+                toast.querySelector('i').className = 'fas fa-exclamation-circle';
+            } else {
+                toast.style.borderColor = '#10b981';
+                toast.querySelector('i').className = 'fas fa-check-circle';
+            }
+            
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Auto-refresh notices every 30 seconds
+        setInterval(async () => {
+            if (document.getElementById('manageSection').classList.contains('active')) {
+                await loadNotices();
+                await updateStats();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
+

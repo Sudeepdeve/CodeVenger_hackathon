@@ -1185,30 +1185,97 @@ function populateRecentActivity() {
     }
 }
 
-function populateImportantNotices() {
+async function populateImportantNotices() {
     const lang = getCurrentLanguage ? getCurrentLanguage() : 'english';
+    const API_BASE_URL = 'http://localhost:3000/api';
     
-    const notices = lang === 'nepali' ? [
-        { title: 'नयाँ डिजिटल हस्ताक्षर सेवा', desc: 'अनलाइनमा डिजिटल हस्ताक्षरको लागि आवेदन गर्नुहोस्', icon: 'fa-signature' },
-        { title: 'पासपोर्ट शुल्क कम', desc: 'पासपोर्ट आवेदनमा २०% छुट', icon: 'fa-percentage' }
-    ] : [
-        { title: 'New Digital Signature Service', desc: 'Apply for digital signature online', icon: 'fa-signature' },
-        { title: 'Passport Fee Reduced', desc: '20% discount on passport applications', icon: 'fa-percentage' }
-    ];
+    let notices = [];
+    
+    // Try to fetch from backend API first
+    try {
+        const response = await fetch(`${API_BASE_URL}/notices`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            cache: 'no-cache'
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            if (result.success && result.data && Array.isArray(result.data)) {
+                notices = result.data;
+                console.log('✅ [app.js] Loaded', notices.length, 'notices from backend');
+            } else {
+                console.warn('Backend returned invalid data:', result);
+            }
+        } else {
+            console.warn('Backend response not OK:', response.status);
+        }
+    } catch (error) {
+        console.warn('Backend API not available, trying localStorage fallback:', error);
+        
+        // Fallback to localStorage if backend is not available
+        try {
+            const savedNotices = localStorage.getItem('governmentNotices');
+            if (savedNotices) {
+                notices = JSON.parse(savedNotices);
+                console.log('✅ [app.js] Loaded', notices.length, 'notices from localStorage');
+            }
+        } catch (e) {
+            console.warn('Error loading notices from localStorage:', e);
+        }
+    }
+    
+    // Fallback to default notices if none exist
+    if (notices.length === 0) {
+        console.log('No notices found, showing default notices');
+        notices = lang === 'nepali' ? [
+            { title: 'नयाँ डिजिटल हस्ताक्षर सेवा', desc: 'अनलाइनमा डिजिटल हस्ताक्षरको लागि आवेदन गर्नुहोस्', icon: 'fa-signature', priority: 'medium', date: new Date().toISOString().split('T')[0] },
+            { title: 'पासपोर्ट शुल्क कम', desc: 'पासपोर्ट आवेदनमा २०% छुट', icon: 'fa-percentage', priority: 'medium', date: new Date().toISOString().split('T')[0] }
+        ] : [
+            { title: 'New Digital Signature Service', desc: 'Apply for digital signature online', icon: 'fa-signature', priority: 'medium', date: new Date().toISOString().split('T')[0] },
+            { title: 'Passport Fee Reduced', desc: '20% discount on passport applications', icon: 'fa-percentage', priority: 'medium', date: new Date().toISOString().split('T')[0] }
+        ];
+    }
+    
+    // Sort by date (newest first) and limit to 10 most recent
+    notices = notices.sort((a, b) => {
+        const dateA = new Date(a.date || a.createdAt || 0);
+        const dateB = new Date(b.date || b.createdAt || 0);
+        return dateB - dateA;
+    }).slice(0, 10);
     
     const container = document.getElementById('importantNotices');
     if (container) {
-        container.innerHTML = notices.map(notice => `
-            <div class="notice-item">
-                <div class="notice-icon">
-                    <i class="fas ${notice.icon}"></i>
-                </div>
-                <div class="notice-content">
-                    <h4>${notice.title}</h4>
-                    <p>${notice.desc}</p>
-                </div>
-            </div>
-        `).join('');
+        if (notices.length > 0) {
+            container.innerHTML = notices.map(notice => {
+                const priority = notice.priority || 'medium';
+                const icon = notice.icon || 'fa-bullhorn';
+                const title = notice.title || 'Untitled Notice';
+                const desc = notice.desc || notice.description || '';
+                const date = notice.date || notice.createdAt;
+                const link = notice.link || '';
+                
+                return `
+                    <div class="notice-item ${priority}" onclick="${link ? `window.open('${link}', '_blank')` : ''}" style="${link ? 'cursor: pointer;' : ''}">
+                        <div class="notice-icon">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="notice-content">
+                            <h4>${title}</h4>
+                            <p>${desc}</p>
+                            ${date ? `<small style="color: #94a3b8; font-size: 0.75rem;">${new Date(date).toLocaleDateString()}</small>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            console.log('✅ [app.js] Rendered', notices.length, 'notices in Important Notices section');
+        } else {
+            container.innerHTML = '<p style="color: #64748b; padding: 1rem; text-align: center;">No notices available</p>';
+        }
+    } else {
+        console.warn('importantNotices container not found in DOM');
     }
 }
 

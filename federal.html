@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federal Government Dashboard - Smart Nagarik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f1f5f9;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #dc2626;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-logout {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #dc2626, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #dc2626, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: #f1f5f9;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-3px);
+        }
+
+        .action-btn i {
+            font-size: 2rem;
+            color: #3b82f6;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #f1f5f9;
+        }
+
+        .activity-feed {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .activity-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-time {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-text {
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+            Smart Nagarik
+        </div>
+        <div class="user-info">
+            <span>Federal Government</span>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Federal Government Dashboard</h1>
+            <p>National Command Center - Policy Cockpit</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="stat-value">247</div>
+                <div class="stat-label">Active Policies</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="stat-value">NPR 45.2B</div>
+                <div class="stat-label">Budget Allocated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value">753</div>
+                <div class="stat-label">Projects Monitored</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <div class="stat-value">7</div>
+                <div class="stat-label">Provinces Connected</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="actions-grid">
+            <a href="#" class="action-btn">
+                <i class="fas fa-plus-circle"></i>
+                <span>Create Policy</span>
+            </a>
+            <a href="#" class="action-btn">
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>Release Funds</span>
+            </a>
+            <a href="#" class="action-btn">
+                <i class="fas fa-chart-bar"></i>
+                <span>View Reports</span>
+            </a>
+            <a href="#" class="action-btn">
+                <i class="fas fa-users"></i>
+                <span>Manage Provinces</span>
+            </a>
+            <a href="#" class="action-btn">
+                <i class="fas fa-bell"></i>
+                <span>Send Directive</span>
+            </a>
+            <a href="#" class="action-btn">
+                <i class="fas fa-eye"></i>
+                <span>Monitor Status</span>
+            </a>
+        </div>
+
+        <h2 class="section-title">Recent Activities</h2>
+        <div class="activity-feed">
+            <div class="activity-item">
+                <div class="activity-time">2 hours ago</div>
+                <div class="activity-text">Budget allocation of NPR 2.5B approved for Province 3 infrastructure projects
+                </div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-time">5 hours ago</div>
+                <div class="activity-text">New education policy directive sent to all provinces</div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-time">1 day ago</div>
+                <div class="activity-text">Quarterly performance report received from Province 1</div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-time">2 days ago</div>
+                <div class="activity-text">Emergency fund release approved for flood relief in Province 2</div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-time">3 days ago</div>
+                <div class="activity-text">National coordination meeting scheduled with all province heads</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

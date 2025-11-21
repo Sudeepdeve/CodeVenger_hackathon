@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Run - Simple Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+        .step {
+            background: #f8fafc;
+            border-left: 4px solid #1e40af;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+        }
+        .step-number {
+            background: linear-gradient(135deg, #1e40af, #dc2626);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        .step h2 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+        .step p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-top: 0.5rem;
+        }
+        .code {
+            background: #1e293b;
+            color: #10b981;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+        .highlight {
+            background: #fef3c7;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        .warning {
+            background: #fee2e2;
+            border-left-color: #dc2626;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .success {
+            background: #d1fae5;
+            border-left-color: #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .diagram {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 How to Run - Simple Guide</h1>
+        <p class="subtitle">Get provincial notices showing in home.html in 4 easy steps!</p>
+
+        <div class="step">
+            <span class="step-number">1</span>
+            <h2>Start the Server</h2>
+            <p><strong>On Mac:</strong> Double-click <span class="code">START_SERVER.sh</span></p>
+            <p><strong>On Windows:</strong> Double-click <span class="code">START_SERVER.bat</span></p>
+            <p><strong>OR</strong> Open Terminal/Command Prompt and type:</p>
+            <div class="code">npm install</div>
+            <p>(First time only - wait for it to finish)</p>
+            <div class="code">npm start</div>
+            <div class="success">
+                ✅ You should see: "Server running on http://localhost:3000"<br>
+                ⚠️ <strong>Keep this window open!</strong>
+            </div>
+        </div>
+
+        <div class="step">
+            <span class="step-number">2</span>
+            <h2>Open Province Government Panel</h2>
+            <p>Double-click <span class="highlight">proviencegov.html</span></p>
+            <p>It will open in your web browser</p>
+        </div>
+
+        <div class="step">
+            <span class="step-number">3</span>
+            <h2>Publish a Notice</h2>
+            <p>In the form, fill in:</p>
+            <ul style="margin-left: 2rem; color: #64748b;">
+                <li>Title (e.g., "New Service Available")</li>
+                <li>Description (e.g., "Check out our new features")</li>
+                <li>Priority (High/Medium/Low)</li>
+            </ul>
+            <p>Click <span class="highlight">"Publish Notice"</span></p>
+            <div class="success">✅ You'll see: "Notice published successfully!"</div>
+        </div>
+
+        <div class="step">
+            <span class="step-number">4</span>
+            <h2>See It in Home.html</h2>
+            <p>Double-click <span class="highlight">home.html</span></p>
+            <p>Look at the <span class="highlight">"Important Notices"</span> section</p>
+            <div class="success">✨ Your notice will appear there instantly!</div>
+        </div>
+
+        <div class="diagram">
+            <strong>How It Works:</strong><br><br>
+            proviencegov.html<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;↓ (Publish)<br>
+            Backend Server<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;↓ (Stores)<br>
+            home.html<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;↓ (Shows)<br>
+            Citizens See Notice! ✨
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Troubleshooting:</strong><br><br>
+            <strong>"npm: command not found"</strong><br>
+            → Install Node.js from <a href="https://nodejs.org/" target="_blank">nodejs.org</a><br><br>
+            
+            <strong>Notices not appearing?</strong><br>
+            → Make sure server is running (Step 1)<br>
+            → Refresh home.html (Press F5)<br>
+            → Check browser console (Press F12) for errors
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1.5rem; background: #eff6ff; border-radius: 8px;">
+            <h3 style="color: #1e40af; margin-bottom: 0.5rem;">💡 Tips:</h3>
+            <ul style="margin-left: 2rem; color: #64748b;">
+                <li>Keep the server window open while using the system</li>
+                <li>You can publish multiple notices</li>
+                <li>Edit or delete notices anytime from proviencegov.html</li>
+                <li>All notices automatically appear in home.html</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
