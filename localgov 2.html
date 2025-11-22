@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citizen Portal - Smart Nagarik</title>
+    <title>Local Government Dashboard - Smart Nagarik</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -38,7 +38,7 @@
             gap: 12px;
             font-size: 1.5rem;
             font-weight: 800;
-            color: #8b5cf6;
+            color: #10b981;
         }
 
         .user-info {
@@ -49,7 +49,7 @@
 
         .btn-logout {
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, #10b981, #3b82f6);
             color: white;
             border: none;
             border-radius: 0.75rem;
@@ -75,7 +75,7 @@
         .dashboard-header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, #10b981, #3b82f6);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -110,13 +110,13 @@
         .stat-icon {
             width: 50px;
             height: 50px;
-            background: rgba(139, 92, 246, 0.2);
+            background: rgba(16, 185, 129, 0.2);
             border-radius: 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            color: #8b5cf6;
+            color: #10b981;
             margin-bottom: 1rem;
         }
 
@@ -132,14 +132,14 @@
             font-size: 0.9rem;
         }
 
-        .services-grid {
+        .actions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .service-card {
+        .action-btn {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -156,14 +156,14 @@
             gap: 0.75rem;
         }
 
-        .service-card:hover {
+        .action-btn:hover {
             background: rgba(30, 41, 59, 0.8);
             transform: translateY(-3px);
         }
 
-        .service-card i {
+        .action-btn i {
             font-size: 2rem;
-            color: #8b5cf6;
+            color: #10b981;
         }
 
         .section-title {
@@ -173,7 +173,7 @@
             color: #f1f5f9;
         }
 
-        .requests-list {
+        .activity-feed {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -181,31 +181,23 @@
             padding: 1.5rem;
         }
 
-        .request-item {
+        .activity-item {
             padding: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .request-item:last-child {
+        .activity-item:last-child {
             border-bottom: none;
         }
 
-        .request-info {
-            flex: 1;
-        }
-
-        .request-title {
-            font-weight: 600;
-            color: #f1f5f9;
+        .activity-time {
+            color: #94a3b8;
+            font-size: 0.85rem;
             margin-bottom: 0.25rem;
         }
 
-        .request-date {
-            color: #94a3b8;
-            font-size: 0.85rem;
+        .activity-text {
+            color: #cbd5e1;
         }
 
         .badge {
@@ -214,6 +206,7 @@
             border-radius: 0.5rem;
             font-size: 0.75rem;
             font-weight: 600;
+            margin-left: 0.5rem;
         }
 
         .badge-success {
@@ -230,158 +223,124 @@
             background: rgba(59, 130, 246, 0.2);
             color: #3b82f6;
         }
-
-        .btn-primary {
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
-            color: white;
-            border: none;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-        }
     </style>
 </head>
 
 <body>
     <div class="header">
         <div class="logo">
-            <i class="fas fa-user-circle"></i>
+            <i class="fas fa-city"></i>
             Smart Nagarik
         </div>
         <div class="user-info">
-            <span>Citizen Portal</span>
-            <button class="btn-logout" onclick="window.location.herf='logout'>
-                <i class="fas fa-sign-out-alt"></i> <a onclick="window.open('localgov.html', '_blank')">Logout</a>
+            <span>Local Government</span>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
     </div>
 
     <div class="container">
         <div class="dashboard-header">
-            <h1>Welcome to Citizen Portal</h1>
-            <p>Your Gateway to Government Services</p>
+            <h1>Local Government Dashboard</h1>
+            <p>Field Execution - Ward Level Operations</p>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-file-alt"></i>
+                    <i class="fas fa-users"></i>
                 </div>
-                <div class="stat-value">5</div>
-                <div class="stat-label">Active Requests</div>
+                <div class="stat-value">1,247</div>
+                <div class="stat-label">Citizen Requests</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-tasks"></i>
                 </div>
-                <div class="stat-value">12</div>
-                <div class="stat-label">Completed Services</div>
+                <div class="stat-value">89</div>
+                <div class="stat-label">Active Projects</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-id-card"></i>
+                    <i class="fas fa-exclamation-triangle"></i>
                 </div>
-                <div class="stat-value">3</div>
-                <div class="stat-label">Documents Ready</div>
+                <div class="stat-value">23</div>
+                <div class="stat-label">Pending Incidents</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-map-marker-alt"></i>
                 </div>
-                <div class="stat-value">2</div>
-                <div class="stat-label">New Notifications</div>
+                <div class="stat-value">15</div>
+                <div class="stat-label">Wards Managed</div>
             </div>
         </div>
 
-        <h2 class="section-title">Available Services</h2>
-        <div class="services-grid">
-            <a href="#" class="service-card">
-                <i class="fas fa-baby"></i>
-                <span>Birth Certificate</span>
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="actions-grid">
+            <a href="#" class="action-btn">
+                <i class="fas fa-file-medical"></i>
+                <span>File Incident</span>
             </a>
-            <a href="#" class="service-card">
-                <i class="fas fa-id-card"></i>
-                <span>Citizenship</span>
+            <a href="#" class="action-btn">
+                <i class="fas fa-sync-alt"></i>
+                <span>Update Status</span>
             </a>
-            <a href="#" class="service-card">
-                <i class="fas fa-briefcase"></i>
-                <span>Business License</span>
+            <a href="#" class="action-btn">
+                <i class="fas fa-clipboard-list"></i>
+                <span>View Directives</span>
             </a>
-            <a href="#" class="service-card">
-                <i class="fas fa-home"></i>
-                <span>Land Registration</span>
+            <a href="#" class="action-btn">
+                <i class="fas fa-camera"></i>
+                <span>Upload Evidence</span>
             </a>
-            <a href="#" class="service-card">
-                <i class="fas fa-car"></i>
-                <span>Vehicle License</span>
+            <a href="#" class="action-btn">
+                <i class="fas fa-users-cog"></i>
+                <span>Citizen Services</span>
             </a>
-            <a href="#" class="service-card">
-                <i class="fas fa-graduation-cap"></i>
-                <span>Education Records</span>
-            </a>
-            <a href="#" class="service-card">
-                <i class="fas fa-heartbeat"></i>
-                <span>Health Services</span>
-            </a>
-            <a href="#" class="service-card">
-                <i class="fas fa-file-invoice"></i>
-                <span>Tax Payment</span>
+            <a href="#" class="action-btn">
+                <i class="fas fa-chart-pie"></i>
+                <span>Ward Reports</span>
             </a>
         </div>
 
-        <div style="text-align: center; margin: 2rem 0;">
-            <button class="btn-primary">
-                <i class="fas fa-plus-circle"></i>
-                New Service Request
-            </button>
-        </div>
-
-        <h2 class="section-title">My Requests</h2>
-        <div class="requests-list">
-            <div class="request-item">
-                <div class="request-info">
-                    <div class="request-title">Birth Certificate Application</div>
-                    <div class="request-date">Submitted on Jan 15, 2025</div>
+        <h2 class="section-title">Recent Activities</h2>
+        <div class="activity-feed">
+            <div class="activity-item">
+                <div class="activity-time">30 minutes ago</div>
+                <div class="activity-text">
+                    Road repair incident filed for Ward 12 with geo-tagged photos
+                    <span class="badge badge-warning">Pending</span>
                 </div>
-                <span class="badge badge-info">Processing</span>
             </div>
-            <div class="request-item">
-                <div class="request-info">
-                    <div class="request-title">Business License Renewal</div>
-                    <div class="request-date">Submitted on Jan 10, 2025</div>
+            <div class="activity-item">
+                <div class="activity-time">2 hours ago</div>
+                <div class="activity-text">
+                    Birth certificate request approved for citizen ID: NP-2024-1234
+                    <span class="badge badge-success">Completed</span>
                 </div>
-                <span class="badge badge-warning">Pending Payment</span>
             </div>
-            <div class="request-item">
-                <div class="request-info">
-                    <div class="request-title">Citizenship Certificate</div>
-                    <div class="request-date">Submitted on Jan 5, 2025</div>
+            <div class="activity-item">
+                <div class="activity-time">4 hours ago</div>
+                <div class="activity-text">
+                    Water supply project status updated - 75% complete
+                    <span class="badge badge-info">In Progress</span>
                 </div>
-                <span class="badge badge-success">Ready for Pickup</span>
             </div>
-            <div class="request-item">
-                <div class="request-info">
-                    <div class="request-title">Vehicle Registration</div>
-                    <div class="request-date">Submitted on Dec 28, 2024</div>
+            <div class="activity-item">
+                <div class="activity-time">1 day ago</div>
+                <div class="activity-text">
+                    Provincial directive received: Implement new waste management system
+                    <span class="badge badge-info">New</span>
                 </div>
-                <span class="badge badge-success">Completed</span>
             </div>
-            <div class="request-item">
-                <div class="request-info">
-                    <div class="request-title">Land Ownership Certificate</div>
-                    <div class="request-date">Submitted on Dec 20, 2024</div>
+            <div class="activity-item">
+                <div class="activity-time">2 days ago</div>
+                <div class="activity-text">
+                    Community meeting held with Ward 8 residents - 45 attendees
+                    <span class="badge badge-success">Completed</span>
                 </div>
-                <span class="badge badge-success">Completed</span>
             </div>
         </div>
     </div>

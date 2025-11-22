@@ -1,4 +1,8 @@
 
+// ============================================
+// NEPAL E-GOVERNANCE PLATFORM - Fixed Version
+// Version 2.0.1 - Bug Fixed
+// ============================================
 
 // ==================== CONFIGURATION ====================
 const CONFIG = {
@@ -33,12 +37,12 @@ const STATE = {
 
 // ==================== INITIALIZATION ====================
 // Global JS error catcher to help debugging when the page appears blank
-window.addEventListener('error', function(event) {
+window.addEventListener('error', function (event) {
     console.error('Global error caught:', event.error || event.message);
     showErrorOverlay(event.message || (event.error && event.error.toString()) || 'Unknown error');
 });
 
-window.addEventListener('unhandledrejection', function(event) {
+window.addEventListener('unhandledrejection', function (event) {
     console.error('Unhandled promise rejection:', event.reason);
     showErrorOverlay(event.reason && (event.reason.stack || event.reason.message) || String(event.reason));
 });
@@ -50,14 +54,14 @@ function showErrorOverlay(msg) {
         overlay.id = 'jsErrorOverlay';
         overlay.style.position = 'fixed';
         overlay.style.inset = '2';
-       
+
         overlay.style.color = 'white';
         overlay.style.zIndex = '99999';
         overlay.style.padding = '2rem';
         overlay.style.overflow = 'auto';
         overlay.innerHTML = ``;
         document.body.appendChild(overlay);
-        document.getElementById('jsErrorClose').addEventListener('click', function() {
+        document.getElementById('jsErrorClose').addEventListener('click', function () {
             overlay.remove();
         });
     } else {
@@ -67,14 +71,14 @@ function showErrorOverlay(msg) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Check if user is logged in
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     // Allow bypass for local testing: use URL hash `#noauth`, set localStorage `bypassLogin` to 'true',
     // or open the file directly (file:// protocol) which is common when running from the filesystem.
     const bypassAuth = location.hash.includes('noauth') || localStorage.getItem('bypassLogin') === 'true' || location.protocol === 'file:';
     if (!isLoggedIn && !bypassAuth) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     } else if (!isLoggedIn && bypassAuth) {
         console.warn('Bypassing auth for local testing (no logged-in user).');
@@ -96,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof showToast === 'function') showToast('Local test mode: dashboard loaded (no login required)');
         }, 300);
     }
-    
+
     showLoadingScreen();
     // Give app 1 second to initialize
     setTimeout(() => {
@@ -108,15 +112,15 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeApp() {
     try {
         console.log('🇳🇵 Nepal e-Governance Platform v' + CONFIG.APP_VERSION);
-        
+
         // Load theme first
         loadTheme();
-        
+
         // Load user profile from localStorage
         loadUserProfile();
         maybePromptProfileSetup();
         updateWelcomeMessage();
-        
+
         // Load language preference and set indicator
         const savedLanguage = localStorage.getItem('appLanguage') || 'english';
         if (typeof setAppLanguage === 'function') {
@@ -125,25 +129,24 @@ function initializeApp() {
         }
         // Initialize language indicator in header
         if (typeof updateLanguageIndicator === 'function') updateLanguageIndicator();
-        
+
         // Parallel initialization without blocking
         populateAllContent();
         setupSettingsNavigation();
         initializeVoiceRecognition();
         initializeNotifications();
-        loadAnalyticsChart();
 
-            // Ensure dynamic tabs/content are pre-populated so they appear ready
-            // the first time user opens them (fixes issue where content only
-            // appears after manual language toggle)
-            if (typeof ensureTabsPrepopulated === 'function') ensureTabsPrepopulated();
-        
+        // Ensure dynamic tabs/content are pre-populated so they appear ready
+        // the first time user opens them (fixes issue where content only
+        // appears after manual language toggle)
+        if (typeof ensureTabsPrepopulated === 'function') ensureTabsPrepopulated();
+
         // Skip service worker for faster loading
         // initializeServiceWorker();
-        
+
         // Skip auto profile setup - let user click to set up profile
         // Users can click profile setup button in sidebar if needed
-        
+
         animateCounters();
         // Re-apply language to ensure dynamic content and translations are in sync
         try {
@@ -210,9 +213,9 @@ function updateProfileSetupStep() {
     document.querySelectorAll('.profile-setup-step').forEach(step => {
         step.classList.remove('active');
     });
-    
+
     document.querySelector(`.profile-setup-step[data-step="${currentStep}"]`).classList.add('active');
-    
+
     document.querySelectorAll('.step-dot').forEach((dot, index) => {
         if (index < currentStep) {
             dot.classList.add('active');
@@ -220,9 +223,9 @@ function updateProfileSetupStep() {
             dot.classList.remove('active');
         }
     });
-    
+
     document.getElementById('prevBtn').disabled = currentStep === 1;
-    
+
     const nextBtn = document.getElementById('nextBtn');
     if (currentStep === totalSteps) {
         nextBtn.innerHTML = '<i class="fas fa-check"></i> Complete Setup';
@@ -232,20 +235,20 @@ function updateProfileSetupStep() {
 }
 
 function validateStep(step) {
-    switch(step) {
+    switch (step) {
         case 1:
             return document.getElementById('fullNameEn').value &&
-                   document.getElementById('fullNameNp').value &&
-                   document.getElementById('dob').value &&
-                   document.getElementById('gender').value &&
-                   document.getElementById('mobile').value;
+                document.getElementById('fullNameNp').value &&
+                document.getElementById('dob').value &&
+                document.getElementById('gender').value &&
+                document.getElementById('mobile').value;
         case 2:
             return true;
         case 3:
             return document.getElementById('province').value &&
-                   document.getElementById('district').value &&
-                   document.getElementById('municipality').value &&
-                   document.getElementById('ward').value;
+                document.getElementById('district').value &&
+                document.getElementById('municipality').value &&
+                document.getElementById('ward').value;
         case 4:
             return true;
         default:
@@ -289,7 +292,7 @@ function saveProfile() {
 
 function updateProfileDisplay() {
     const profile = STATE.currentUser.profile;
-    
+
     const headerName = document.getElementById('headerUserName');
     if (headerName) headerName.textContent = STATE.currentUser.name;
     const dashName = document.getElementById('dashUserName');
@@ -298,17 +301,17 @@ function updateProfileDisplay() {
     if (menuName) menuName.textContent = STATE.currentUser.name;
     const menuEmail = document.getElementById('menuUserEmail');
     if (menuEmail) menuEmail.textContent = STATE.currentUser.email;
-    
+
     const initials = STATE.currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
     document.querySelectorAll('.user-avatar, .menu-avatar').forEach(el => {
         el.textContent = initials;
     });
-    
+
     const profileName = document.getElementById('profileFullName');
     if (profileName) profileName.textContent = STATE.currentUser.name;
     const profileId = document.getElementById('profileNationalId');
     if (profileId) profileId.textContent = profile.nationalId || 'NP-xxxx-xxxx';
-    
+
     const infoFullName = document.getElementById('infoFullName');
     if (infoFullName) infoFullName.textContent = profile.fullNameEn || '-';
     const infoFullNameNp = document.getElementById('infoFullNameNp');
@@ -329,7 +332,7 @@ function updateProfileDisplay() {
     if (infoMunicipality) infoMunicipality.textContent = profile.municipality || '-';
     const infoWard = document.getElementById('infoWard');
     if (infoWard) infoWard.textContent = profile.ward || '-';
-    
+
     const infoAddress = document.getElementById('infoFullAddress');
     if (infoAddress) {
         const provinceName = getProvinceName(profile.province) || '';
@@ -354,7 +357,7 @@ function loadUserProfile() {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const userData = localStorage.getItem('user');
     const savedProfile = localStorage.getItem('userProfile');
-    
+
     // Load from new login system (user data stored from login.html)
     if (userData && isLoggedIn === 'true') {
         try {
@@ -371,7 +374,7 @@ function loadUserProfile() {
             console.error('Error loading user data:', e);
         }
     }
-    
+
     // Load extended profile if available
     if (savedProfile) {
         try {
@@ -381,7 +384,7 @@ function loadUserProfile() {
             console.error('Error loading profile:', e);
         }
     }
-    
+
     // Update display if user is logged in
     if (STATE.currentUser.isLoggedIn) {
         updateProfileDisplay();
@@ -422,7 +425,7 @@ function maybePromptProfileSetup() {
 // ==================== PHOTO UPLOAD ====================
 const photoInput = document.getElementById('profilePhoto');
 if (photoInput) {
-    photoInput.addEventListener('change', function(e) {
+    photoInput.addEventListener('change', function (e) {
         const file = e.target.files[0];
         if (file) {
             if (!CONFIG.SUPPORTED_FILE_TYPES.includes(file.type)) {
@@ -433,9 +436,9 @@ if (photoInput) {
                 showToast('File size must be less than 5MB', 'error');
                 return;
             }
-            
+
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const photoPreview = document.getElementById('photoPreview');
                 photoPreview.innerHTML = `<img src="${e.target.result}" alt="Profile">`;
                 STATE.currentUser.photo = e.target.result;
@@ -452,8 +455,8 @@ function capturePhoto() {
 
 async function startCamera() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-            video: { facingMode: 'user' } 
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user' }
         });
         const video = document.getElementById('cameraVideo');
         video.srcObject = stream;
@@ -469,16 +472,16 @@ function capturePhotoNow() {
     const video = document.getElementById('cameraVideo');
     const canvas = document.getElementById('cameraCanvas');
     const context = canvas.getContext('2d');
-    
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0);
-    
+
     const photoData = canvas.toDataURL('image/jpeg');
     const photoPreview = document.getElementById('photoPreview');
     photoPreview.innerHTML = `<img src="${photoData}" alt="Profile">`;
     STATE.currentUser.photo = photoData;
-    
+
     closeCameraModal();
     showToast('Photo captured successfully!');
 }
@@ -557,7 +560,7 @@ const MUNICIPALITIES_BY_DISTRICT = {
 function loadDistricts() {
     const provinceId = document.getElementById('province').value;
     const districtSelect = document.getElementById('district');
-    
+
     districtSelect.innerHTML = '<option value="">Select District</option>';
     if (DISTRICTS_BY_PROVINCE[provinceId]) {
         DISTRICTS_BY_PROVINCE[provinceId].forEach(district => {
@@ -576,9 +579,9 @@ function loadMunicipalities() {
     const district = document.getElementById('district').value;
     const municipalitySelect = document.getElementById('municipality');
     if (!municipalitySelect) return;
-    
+
     municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
-    
+
     if (MUNICIPALITIES_BY_DISTRICT[district]) {
         MUNICIPALITIES_BY_DISTRICT[district].forEach(mun => {
             municipalitySelect.innerHTML += `<option value="${mun}">${mun}</option>`;
@@ -616,28 +619,28 @@ function showTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
-    
+
     const selectedTab = document.getElementById(tabName + '-tab');
     if (selectedTab) {
         selectedTab.classList.add('active');
         STATE.currentTab = tabName;
     }
-    
+
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-    
-    const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn => 
+
+    const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn =>
         btn.getAttribute('onclick')?.includes(tabName)
     );
     if (activeBtn) {
         activeBtn.classList.add('active');
     }
-    
+
     if (window.innerWidth < 1024) {
         document.getElementById('sidebar').classList.remove('open');
     }
-    
+
     closeAllDropdowns();
 }
 
@@ -656,7 +659,7 @@ function toggleNotifications() {
     const panel = document.getElementById('notificationsPanel');
     panel.classList.toggle('hidden');
     closeOtherDropdowns('notificationsPanel');
-    
+
     if (!panel.classList.contains('hidden')) {
         populateNotifications();
     }
@@ -712,7 +715,7 @@ function populateNotifications() {
             unread: false
         }
     ];
-    
+
     const notificationsList = document.getElementById('notificationsList');
     if (notificationsList) {
         notificationsList.innerHTML = notifications.map(notif => `
@@ -743,10 +746,10 @@ function markAllRead() {
 function showToast(message, type = 'success', duration = 3000) {
     const toast = document.getElementById('successToast');
     if (!toast) return;
-    
+
     const toastMessage = document.getElementById('toastMessage');
     const icon = toast.querySelector('i');
-    
+
     if (type === 'error') {
         icon.className = 'fas fa-exclamation-circle';
         toast.style.borderColor = '#ef4444';
@@ -757,10 +760,10 @@ function showToast(message, type = 'success', duration = 3000) {
         icon.className = 'fas fa-check-circle';
         toast.style.borderColor = '#10b981';
     }
-    
+
     toastMessage.textContent = message;
     toast.classList.remove('hidden');
-    
+
     setTimeout(() => {
         toast.classList.add('hidden');
     }, duration);
@@ -774,31 +777,31 @@ function initializeVoiceRecognition() {
         STATE.recognition.continuous = false;
         STATE.recognition.interimResults = false;
         STATE.recognition.lang = 'en-US';
-        
-        STATE.recognition.onstart = function() {
+
+        STATE.recognition.onstart = function () {
             const voiceBtn = document.getElementById('voiceBtn');
             if (voiceBtn) {
                 voiceBtn.classList.add('recording');
                 voiceBtn.innerHTML = '<i class="fas fa-stop"></i>';
             }
         };
-        
-        STATE.recognition.onend = function() {
+
+        STATE.recognition.onend = function () {
             const voiceBtn = document.getElementById('voiceBtn');
             if (voiceBtn) {
                 voiceBtn.classList.remove('recording');
                 voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
             }
         };
-        
-        STATE.recognition.onresult = function(event) {
+
+        STATE.recognition.onresult = function (event) {
             const transcript = event.results[0][0].transcript;
             const input = document.getElementById('userInput');
             if (input) input.value = transcript;
             handleVoiceCommand(transcript.toLowerCase());
         };
-        
-        STATE.recognition.onerror = function(event) {
+
+        STATE.recognition.onerror = function (event) {
             console.error('Speech recognition error:', event.error);
             showToast('Voice recognition error. Please try again.', 'error');
         };
@@ -838,7 +841,7 @@ function handleVoiceCommand(command) {
         'my profile': 'profile',
         'open settings': 'settings'
     };
-    
+
     for (const [cmd, tab] of Object.entries(commands)) {
         if (command.includes(cmd)) {
             showTab(tab);
@@ -846,7 +849,7 @@ function handleVoiceCommand(command) {
             return;
         }
     }
-    
+
     setTimeout(() => sendMessage(), 500);
 }
 
@@ -854,18 +857,18 @@ function handleVoiceCommand(command) {
 function sendMessage() {
     const input = document.getElementById('userInput');
     if (!input) return;
-    
+
     const query = input.value.trim();
-    
+
     if (!query) {
         showToast('Please enter a message', 'warning');
         return;
     }
-    
+
     STATE.currentQuery = query;
     addMessage(query, 'user');
     input.value = '';
-    
+
     const modal = document.getElementById('languageModal');
     if (modal) modal.classList.remove('hidden');
 }
@@ -906,11 +909,11 @@ function applyAppLanguage(lang) {
     } else {
         localStorage.setItem('appLanguage', lang);
     }
-    
+
     // Close language selector dropdown
     const selector = document.getElementById('languageSelector');
     if (selector) selector.classList.add('hidden');
-    
+
     // Refresh all dynamic content and UI
     setTimeout(() => {
         // Refresh dynamic lists (activity, notices, services, counters)
@@ -925,7 +928,7 @@ function applyAppLanguage(lang) {
         // Update language indicator badge
         updateLanguageIndicator();
     }, 100);
-    
+
     // Show notification
     if (typeof showToast === 'function') {
         showToast(lang === 'nepali' ? 'भाषा नेपालीमा परिवर्तन भयो' : 'Language changed to English');
@@ -969,13 +972,13 @@ function closeLanguageModal() {
 function addMessage(content, role) {
     const chatMessages = document.getElementById('chatMessages');
     if (!chatMessages) return;
-    
+
     const welcome = chatMessages.querySelector('.chat-welcome');
     if (welcome) welcome.remove();
-    
+
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${role}`;
-    
+
     if (role === 'user') {
         messageDiv.innerHTML = `
             <div class="message-avatar">
@@ -998,7 +1001,7 @@ function addMessage(content, role) {
             </div>
         `;
     }
-    
+
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
@@ -1006,7 +1009,7 @@ function addMessage(content, role) {
 function addThinkingMessage() {
     const chatMessages = document.getElementById('chatMessages');
     if (!chatMessages) return;
-    
+
     const thinkingDiv = document.createElement('div');
     thinkingDiv.id = 'thinking-message';
     thinkingDiv.className = 'message assistant';
@@ -1023,7 +1026,7 @@ function addThinkingMessage() {
             </p>
         </div>
     `;
-    
+
     chatMessages.appendChild(thinkingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
@@ -1040,10 +1043,10 @@ function escapeHtml(text) {
 }
 
 async function callGeminiAPI(query, language) {
-    const languageInstruction = language === 'nepali' 
+    const languageInstruction = language === 'nepali'
         ? 'You must respond ONLY in Nepali language using Devanagari script.'
         : 'You must respond ONLY in English language.';
-    
+
     const systemPrompt = `${languageInstruction}
 
 You are an AI assistant for Nepal's e-governance platform. Help citizens with government services including citizenship, passport, business registration, driving license, and more.
@@ -1069,16 +1072,16 @@ User query: ${query}`;
 
         const data = await response.json();
         removeThinkingMessage();
-        
+
         if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
             addMessage(data.candidates[0].content.parts[0].text, 'assistant');
         } else if (data.error) {
-            const errorMsg = language === 'nepali' 
+            const errorMsg = language === 'nepali'
                 ? 'माफ गर्नुहोस्, त्रुटि: ' + data.error.message
                 : 'Sorry, error: ' + data.error.message;
             addMessage(errorMsg, 'assistant');
         } else {
-            const errorMsg = language === 'nepali' 
+            const errorMsg = language === 'nepali'
                 ? 'माफ गर्नुहोस्, समस्या भयो।'
                 : 'Sorry, encountered an issue.';
             addMessage(errorMsg, 'assistant');
@@ -1110,12 +1113,12 @@ function populateAllContent() {
 // Populate common placeholder content into tabs that were left empty
 function populateEmptyTabs() {
     const tabs = [
-        { id: 'identity-tab', key: 'sidebar_identity', defaultTitle: 'Digital Identity', descKey: null, defaultDesc: 'Digital identity features coming soon...'},
-        { id: 'passport-tab', key: 'sidebar_passport', defaultTitle: 'Passport Services', descKey: null, defaultDesc: 'Passport application and tracking features...'},
-        { id: 'documents-tab', key: 'sidebar_documents', defaultTitle: 'Documents', descKey: null, defaultDesc: 'Document issuance and downloads will appear here.'},
-        { id: 'payments-tab', key: 'sidebar_payments', defaultTitle: 'Payments', descKey: null, defaultDesc: 'Payment services and billing features...'},
-        { id: 'voting-tab', key: 'sidebar_voting', defaultTitle: 'e-Voting', descKey: null, defaultDesc: 'Digital voting features coming soon...'},
-        { id: 'applications-tab', key: 'sidebar_applications', defaultTitle: 'My Applications', descKey: null, defaultDesc: 'Track all your applications here...'}
+        { id: 'identity-tab', key: 'sidebar_identity', defaultTitle: 'Digital Identity', descKey: null, defaultDesc: 'Digital identity features coming soon...' },
+        { id: 'passport-tab', key: 'sidebar_passport', defaultTitle: 'Passport Services', descKey: null, defaultDesc: 'Passport application and tracking features...' },
+        { id: 'documents-tab', key: 'sidebar_documents', defaultTitle: 'Documents', descKey: null, defaultDesc: 'Document issuance and downloads will appear here.' },
+        { id: 'payments-tab', key: 'sidebar_payments', defaultTitle: 'Payments', descKey: null, defaultDesc: 'Payment services and billing features...' },
+        { id: 'voting-tab', key: 'sidebar_voting', defaultTitle: 'e-Voting', descKey: null, defaultDesc: 'Digital voting features coming soon...' },
+        { id: 'applications-tab', key: 'sidebar_applications', defaultTitle: 'My Applications', descKey: null, defaultDesc: 'Track all your applications here...' }
     ];
 
     tabs.forEach(tab => {
@@ -1153,7 +1156,7 @@ function populateEmptyTabs() {
 
 function populateRecentActivity() {
     const lang = getCurrentLanguage ? getCurrentLanguage() : 'english';
-    
+
     const activities = lang === 'nepali' ? [
         { title: 'नागरिकता आवेदन', id: 'CIT-2025-001234', status: 'approved', icon: 'fa-id-card', time: '२ घण्टा पहिले' },
         { title: 'व्यवसाय पञ्जीकरण', id: 'BUS-2025-005678', status: 'processing', icon: 'fa-building', time: '१ दिन पहिले' },
@@ -1163,7 +1166,7 @@ function populateRecentActivity() {
         { title: 'Business Registration', id: 'BUS-2025-005678', status: 'processing', icon: 'fa-building', time: '1 day ago' },
         { title: 'Passport Renewal', id: 'PAS-2025-009876', status: 'pending', icon: 'fa-passport', time: '3 days ago' }
     ];
-    
+
     const container = document.getElementById('recentActivity');
     if (container) {
         container.innerHTML = activities.map(activity => `
@@ -1182,36 +1185,103 @@ function populateRecentActivity() {
     }
 }
 
-function populateImportantNotices() {
+async function populateImportantNotices() {
     const lang = getCurrentLanguage ? getCurrentLanguage() : 'english';
-    
-    const notices = lang === 'nepali' ? [
-        { title: 'नयाँ डिजिटल हस्ताक्षर सेवा', desc: 'अनलाइनमा डिजिटल हस्ताक्षरको लागि आवेदन गर्नुहोस्', icon: 'fa-signature' },
-        { title: 'पासपोर्ट शुल्क कम', desc: 'पासपोर्ट आवेदनमा २०% छुट', icon: 'fa-percentage' }
-    ] : [
-        { title: 'New Digital Signature Service', desc: 'Apply for digital signature online', icon: 'fa-signature' },
-        { title: 'Passport Fee Reduced', desc: '20% discount on passport applications', icon: 'fa-percentage' }
-    ];
-    
+    const API_BASE_URL = 'http://localhost:3000/api';
+
+    let notices = [];
+
+    // Try to fetch from backend API first
+    try {
+        const response = await fetch(`${API_BASE_URL}/notices`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            cache: 'no-cache'
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            if (result.success && result.data && Array.isArray(result.data)) {
+                notices = result.data;
+                console.log('✅ [app.js] Loaded', notices.length, 'notices from backend');
+            } else {
+                console.warn('Backend returned invalid data:', result);
+            }
+        } else {
+            console.warn('Backend response not OK:', response.status);
+        }
+    } catch (error) {
+        console.warn('Backend API not available, trying localStorage fallback:', error);
+
+        // Fallback to localStorage if backend is not available
+        try {
+            const savedNotices = localStorage.getItem('governmentNotices');
+            if (savedNotices) {
+                notices = JSON.parse(savedNotices);
+                console.log('✅ [app.js] Loaded', notices.length, 'notices from localStorage');
+            }
+        } catch (e) {
+            console.warn('Error loading notices from localStorage:', e);
+        }
+    }
+
+    // Fallback to default notices if none exist
+    if (notices.length === 0) {
+        console.log('No notices found, showing default notices');
+        notices = lang === 'nepali' ? [
+            { title: 'नयाँ डिजिटल हस्ताक्षर सेवा', desc: 'अनलाइनमा डिजिटल हस्ताक्षरको लागि आवेदन गर्नुहोस्', icon: 'fa-signature', priority: 'medium', date: new Date().toISOString().split('T')[0] },
+            { title: 'पासपोर्ट शुल्क कम', desc: 'पासपोर्ट आवेदनमा २०% छुट', icon: 'fa-percentage', priority: 'medium', date: new Date().toISOString().split('T')[0] }
+        ] : [
+            { title: 'New Digital Signature Service', desc: 'Apply for digital signature online', icon: 'fa-signature', priority: 'medium', date: new Date().toISOString().split('T')[0] },
+            { title: 'Passport Fee Reduced', desc: '20% discount on passport applications', icon: 'fa-percentage', priority: 'medium', date: new Date().toISOString().split('T')[0] }
+        ];
+    }
+
+    // Sort by date (newest first) and limit to 10 most recent
+    notices = notices.sort((a, b) => {
+        const dateA = new Date(a.date || a.createdAt || 0);
+        const dateB = new Date(b.date || b.createdAt || 0);
+        return dateB - dateA;
+    }).slice(0, 10);
+
     const container = document.getElementById('importantNotices');
     if (container) {
-        container.innerHTML = notices.map(notice => `
-            <div class="notice-item">
-                <div class="notice-icon">
-                    <i class="fas ${notice.icon}"></i>
-                </div>
-                <div class="notice-content">
-                    <h4>${notice.title}</h4>
-                    <p>${notice.desc}</p>
-                </div>
-            </div>
-        `).join('');
+        if (notices.length > 0) {
+            container.innerHTML = notices.map(notice => {
+                const priority = notice.priority || 'medium';
+                const icon = notice.icon || 'fa-bullhorn';
+                const title = notice.title || 'Untitled Notice';
+                const desc = notice.desc || notice.description || '';
+                const date = notice.date || notice.createdAt;
+                const link = notice.link || '';
+
+                return `
+                    <div class="notice-item ${priority}" onclick="${link ? `window.open('${link}', '_blank')` : ''}" style="${link ? 'cursor: pointer;' : ''}">
+                        <div class="notice-icon">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="notice-content">
+                            <h4>${title}</h4>
+                            <p>${desc}</p>
+                            ${date ? `<small style="color: #94a3b8; font-size: 0.75rem;">${new Date(date).toLocaleDateString()}</small>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            console.log('✅ [app.js] Rendered', notices.length, 'notices in Important Notices section');
+        } else {
+            container.innerHTML = '<p style="color: #64748b; padding: 1rem; text-align: center;">No notices available</p>';
+        }
+    } else {
+        console.warn('importantNotices container not found in DOM');
     }
 }
 
 function populatePopularServices() {
     const lang = getCurrentLanguage ? getCurrentLanguage() : 'english';
-    
+
     const services = lang === 'nepali' ? [
         { title: 'नागरिकता', icon: 'fa-id-card', color: 'blue', onclick: "showTab('services')" },
         { title: 'पासपोर्ट', icon: 'fa-passport', color: 'red', onclick: "showTab('services')" },
@@ -1223,7 +1293,7 @@ function populatePopularServices() {
         { title: 'License', icon: 'fa-car', color: 'purple', onclick: "showTab('services')" },
         { title: 'Bills', icon: 'fa-bolt', color: 'green', onclick: "showTab('services')" }
     ];
-    
+
     const container = document.getElementById('popularServices');
     if (container) {
         container.innerHTML = services.map(service => `
@@ -1449,7 +1519,7 @@ function connectToHomepage(serviceName) {
 function populateServicesTab() {
     const servicesTab = document.getElementById('services-tab');
     if (!servicesTab) return;
-    
+
     const title = (typeof getTranslation === 'function') ? (getTranslation('sidebar_services') + ' (120+)') : 'All Government Services (120+)';
     const desc = (typeof getTranslation === 'function') ? (getTranslation('dashboard_apply_desc') || 'Explore all available e-governance services organized by category') : 'Explore all available e-governance services organized by category';
     const searchPlaceholder = (typeof getTranslation === 'function') ? (getTranslation('ui_search') || 'Search services...') : 'Search services...';
@@ -1467,7 +1537,7 @@ function populateServicesTab() {
             
             <div class="services-categories">
     `;
-    
+
     for (const [category, data] of Object.entries(ALL_SERVICES)) {
         html += `
             <div class="service-category">
@@ -1481,7 +1551,7 @@ function populateServicesTab() {
                 
                 <div class="services-grid">
         `;
-        
+
         data.services.forEach(service => {
             html += `
                 <div class="service-card" data-service="${service.title}">
@@ -1503,18 +1573,18 @@ function populateServicesTab() {
                 </div>
             `;
         });
-        
+
         html += `
                 </div>
             </div>
         `;
     }
-    
+
     html += `
             </div>
         </div>
     `;
-    
+
     servicesTab.innerHTML = html;
     setupServicesSearch();
 }
@@ -1522,15 +1592,15 @@ function populateServicesTab() {
 function setupServicesSearch() {
     const searchInput = document.getElementById('servicesSearch');
     if (!searchInput) return;
-    
-    searchInput.addEventListener('input', function(e) {
+
+    searchInput.addEventListener('input', function (e) {
         const searchTerm = e.target.value.toLowerCase();
         const serviceCards = document.querySelectorAll('.service-card');
-        
+
         serviceCards.forEach(card => {
             const serviceName = card.getAttribute('data-service').toLowerCase();
             const description = card.querySelector('p').textContent.toLowerCase();
-            
+
             if (serviceName.includes(searchTerm) || description.includes(searchTerm)) {
                 card.style.display = '';
                 card.style.animation = 'fadeIn 0.3s ease';
@@ -1551,13 +1621,13 @@ function accessService(serviceName) {
 // ==================== COUNTER ANIMATION ====================
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
-    
+
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-target'));
         const duration = 2000;
         const step = target / (duration / 16);
         let current = 0;
-        
+
         const timer = setInterval(() => {
             current += step;
             if (current >= target) {
@@ -1573,12 +1643,12 @@ function animateCounters() {
 // ==================== SETTINGS NAVIGATION ====================
 function setupSettingsNavigation() {
     document.querySelectorAll('.settings-nav-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const section = this.getAttribute('data-section');
-            
+
             document.querySelectorAll('.settings-nav-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            
+
             document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
             const targetSection = document.getElementById(section + '-settings');
             if (targetSection) targetSection.classList.add('active');
@@ -1590,7 +1660,7 @@ function setupSettingsNavigation() {
 function showProfileTab(tabName) {
     document.querySelectorAll('.profile-tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.profile-tab-content').forEach(content => content.classList.remove('active'));
-    
+
     event.target.classList.add('active');
     const tab = document.getElementById(`profile-${tabName}-tab`);
     if (tab) tab.classList.add('active');
@@ -1600,14 +1670,14 @@ function showProfileTab(tabName) {
 function trackApplication() {
     const input = document.querySelector('.track-input');
     if (!input) return;
-    
+
     const appId = input.value.trim();
-    
+
     if (!appId) {
         showToast('Please enter application ID', 'warning');
         return;
     }
-    
+
     showToast('Fetching application status...');
     setTimeout(() => {
         showToast('Application found! Status: Processing');
@@ -1675,7 +1745,7 @@ function attachFile() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.pdf,.jpg,.jpeg,.png';
-    input.onchange = function(e) {
+    input.onchange = function (e) {
         const file = e.target.files[0];
         if (file) {
             showToast('File attached: ' + file.name);
@@ -1721,7 +1791,7 @@ function uploadDocument() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.pdf,.jpg,.jpeg,.png';
-    input.onchange = function(e) {
+    input.onchange = function (e) {
         const file = e.target.files[0];
         if (file) {
             showToast('Uploading document...');
@@ -1779,7 +1849,7 @@ function setupBiometric() {
         showToast('Biometric authentication not supported', 'error');
         return;
     }
-    
+
     showToast('Place your finger on the sensor...');
     setTimeout(() => {
         showToast('Biometric authentication enabled successfully! 🔐');
@@ -1824,10 +1894,10 @@ function downloadReceipt() {
 }
 
 function logout() {
-    const confirmMsg = typeof getTranslation === 'function' 
-        ? getTranslation('confirm_logout', STATE.selectedLanguage) 
+    const confirmMsg = typeof getTranslation === 'function'
+        ? getTranslation('confirm_logout', STATE.selectedLanguage)
         : 'Are you sure you want to logout?';
-    
+
     if (confirm(confirmMsg)) {
         // Clear all user data
         localStorage.removeItem('isLoggedIn');
@@ -1835,7 +1905,7 @@ function logout() {
         localStorage.removeItem('userProfile');
         localStorage.removeItem('rememberLogin');
         localStorage.removeItem('rememberedEmail');
-        
+
         // Reset STATE
         STATE.currentUser = {
             id: null,
@@ -1845,14 +1915,14 @@ function logout() {
             isLoggedIn: false,
             profile: {}
         };
-        
-        const successMsg = typeof getTranslation === 'function' 
-            ? getTranslation('success_logout', STATE.selectedLanguage) 
+
+        const successMsg = typeof getTranslation === 'function'
+            ? getTranslation('success_logout', STATE.selectedLanguage)
             : 'Logged out successfully. Redirecting...';
-        
+
         showToast(successMsg);
         setTimeout(() => {
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         }, 1500);
     }
 }
@@ -1869,100 +1939,45 @@ function submitVote(choice) {
 }
 
 // ==================== EVENT LISTENERS ====================
-// ==================== ANALYTICS & CHARTS ====================
-function loadAnalyticsChart() {
-    // Use hardcoded data instead of API
-    const data = {
-        categories: ['Service 1', 'Service 2', 'Service 3'],
-        completed: [120, 100, 80],
-        remaining: [160, 140, 120]
-    };
-    renderBarChart(data);
-}
-
-function renderBarChart(data) {
-    const chartContainer = document.getElementById('analyticsChart');
-    if (!chartContainer) return;
-    
-    // Create simple SVG bar chart (no external library needed)
-    const width = 600;
-    const height = 300;
-    const barWidth = 40;
-    const spacing = 80;
-    const maxValue = Math.max(...data.completed, ...data.remaining);
-    const scale = (height - 50) / maxValue;
-    
-    let svg = `<svg width="${width}" height="${height}" style="border: 1px solid #e0e0e0; border-radius: 8px; background: #fafafa;">`;
-    
-    // Y-axis
-    svg += `<line x1="40" y1="20" x2="40" y2="${height - 30}" stroke="#333" stroke-width="2"/>`;
-    
-    // X-axis
-    svg += `<line x1="40" y1="${height - 30}" x2="${width}" y2="${height - 30}" stroke="#333" stroke-width="2"/>`;
-    
-    // Y-axis labels
-    for (let i = 0; i <= maxValue; i += Math.ceil(maxValue / 5)) {
-        const y = height - 30 - (i * scale);
-        svg += `<line x1="35" y1="${y}" x2="40" y2="${y}" stroke="#333" stroke-width="1"/>`;
-        svg += `<text x="10" y="${y + 5}" font-size="12" fill="#666">${i}</text>`;
-    }
-    
-    // Bars for Completed (blue)
-    data.completed.forEach((value, index) => {
-        const x = 60 + (index * spacing);
-        const barHeight = value * scale;
-        const y = height - 30 - barHeight;
-        svg += `<rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" fill="#3b82f6" opacity="0.8" rx="4"/>`;
-        svg += `<text x="${x}" y="${height - 5}" font-size="12" text-anchor="middle" fill="#333">${data.categories[index]}</text>`;
-    });
-    
-    // Legend
-    svg += `<rect x="50" y="10" width="12" height="12" fill="#3b82f6" opacity="0.8"/>`;
-    svg += `<text x="70" y="20" font-size="12" fill="#333">Completed</text>`;
-    
-    svg += `</svg>`;
-    chartContainer.innerHTML = svg;
-}
-
 function setupEventListeners() {
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.user-profile-btn') && 
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.user-profile-btn') &&
             !e.target.closest('#userMenu') &&
             !e.target.closest('.icon-btn')) {
             closeAllDropdowns();
         }
     });
-    
+
     const globalSearch = document.getElementById('globalSearch');
     if (globalSearch) {
-        globalSearch.addEventListener('input', function(e) {
+        globalSearch.addEventListener('input', function (e) {
             const query = e.target.value.toLowerCase();
             if (query.length > 2) {
                 console.log('Searching for:', query);
             }
         });
     }
-    
-    document.addEventListener('keydown', function(e) {
+
+    document.addEventListener('keydown', function (e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
             const search = document.getElementById('globalSearch');
             if (search) search.focus();
         }
-        
+
         if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
             e.preventDefault();
             showTab('dashboard');
         }
-        
+
         if (e.key === 'Escape') {
             closeAllDropdowns();
         }
     });
-    
+
     const userInput = document.getElementById('userInput');
     if (userInput) {
-        userInput.addEventListener('keypress', function(e) {
+        userInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
@@ -1973,9 +1988,9 @@ function setupEventListeners() {
 // ==================== SERVICE WORKER ====================
 function initializeServiceWorker() {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+        navigator.serviceWorker.register('/sw.js').then(function (registration) {
             console.log('ServiceWorker registered:', registration.scope);
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.log('ServiceWorker registration failed:', error);
         });
     }
@@ -1991,4 +2006,149 @@ function initializeNotifications() {
 // ==================== INITIALIZATION COMPLETE ====================
 console.log('🇳🇵 Nepal e-Governance Platform - All Features Loaded');
 console.log('✅ System Ready');
-console.log('जय नेपाल! 🇳🇵'); 
+console.log('जय नेपाल! 🇳🇵'); // ==================== LOGIN MODAL FUNCTIONS ====================
+
+let currentSelectedRole = 'federal'; // Default role
+
+// Function to open the auth modal and set the role
+function openRoleModal(role) {
+    console.log('Opening role modal for:', role);
+    currentSelectedRole = role;
+
+    // Show the modal
+    const authModal = document.getElementById('authModal');
+    if (authModal) {
+        authModal.style.display = 'flex';
+        authModal.style.opacity = '0';
+        setTimeout(() => {
+            authModal.style.opacity = '1';
+        }, 10);
+
+        // Set the active role button
+        const roleButtons = document.querySelectorAll('.role-btn');
+        roleButtons.forEach(btn => {
+            if (btn.dataset.role === role) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    } else {
+        console.error('Auth modal not found!');
+    }
+}
+
+// Function to hide the auth modal
+function hideAuthModal() {
+    const authModal = document.getElementById('authModal');
+    if (authModal) {
+        authModal.style.opacity = '0';
+        setTimeout(() => {
+            authModal.style.display = 'none';
+        }, 300);
+    }
+}
+
+// Handle role button clicks within the modal
+document.addEventListener('DOMContentLoaded', function () {
+    const roleButtons = document.querySelectorAll('.role-btn');
+    roleButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+            // Remove active class from all
+            roleButtons.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked
+            this.classList.add('active');
+            currentSelectedRole = this.dataset.role;
+            console.log('Selected role:', currentSelectedRole);
+        });
+    });
+
+    // DISABLED - Old login system conflicts with new login system in index.html
+    /*
+    // Handle login form submission
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+    */
+
+    // Handle register form submission  
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', handleRegister);
+    }
+});
+
+// Handle login
+/* DISABLED - Old login code conflicts with new login system in index.html
+async function handleLogin(e) {
+    if (e) e.preventDefault();
+
+    const email = document.getElementById('loginEmail')?.value;
+    const password = document.getElementById('loginPassword')?.value;
+
+    console.log('Login attempt:', { role: currentSelectedRole, email });
+
+    // Demo credentials - match with user role
+    const demoCredentials = {
+        federal: { email: 'federal@gov.np', password: 'federal123', page: 'federal.html' },
+        provincial: { email: 'provincial@gov.np', password: 'provincial123', page: 'proviencegov.html' },
+        local: { email: 'local@gov.np', password: 'local123', page: 'localgov.html' },
+        citizen: { email: 'citizen@gov.np', password: 'citizen123', page: 'citizen.html' }
+    };
+
+    const roleCredentials = demoCredentials[currentSelectedRole];
+
+    if (email === roleCredentials.email && password === roleCredentials.password) {
+        // Success!
+        console.log('✅ Login successful! Redirecting to:', roleCredentials.page);
+
+        // Store user session
+        localStorage.setItem('userRole', currentSelectedRole);
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('isLoggedIn', 'true');
+
+        // Show success toast if available
+        if (typeof showToast === 'function') {
+            showToast(`Welcome! Redirecting to ${currentSelectedRole} dashboard...`, 'success');
+        }
+
+        // Redirect to appropriate dashboard
+        setTimeout(() => {
+            window.location.href = roleCredentials.page;
+        }, 500);
+    } else {
+        // Failed login
+        console.error('❌ Invalid credentials');
+        if (typeof showToast === 'function') {
+            showToast('Invalid credentials! Please try again.', 'error');
+        } else {
+            alert('Invalid credentials!\\n\\nDemo Credentials:\\nFederal: federal@gov.np / federal123\\nProvincial: provincial@gov.np / provincial123\\nLocal: local@gov.np / local123\\nCitizen: citizen@gov.np / citizen123');
+        }
+    }
+}
+*/
+
+// Handle register (stub for now)
+async function handleRegister(e) {
+    if (e) e.preventDefault();
+
+    const name = document.getElementById('registerName')?.value;
+    const email = document.getElementById('registerEmail')?.value;
+    const password = document.getElementById('registerPassword')?.value;
+
+    console.log('Registration attempt:', { role: currentSelectedRole, name, email });
+
+    if (typeof showToast === 'function') {
+        showToast('Registration feature coming soon!', 'info');
+    } else {
+        alert('Registration feature coming soon!\\n\\nPlease use demo credentials to login.');
+    }
+}
+
+console.log('🔐 Login modal functions loaded');
+console.log('📋 Demo Credentials:');
+console.log('  Federal: federal@gov.np / federal123');
+console.log('  Provincial: provincial@gov.np / provincial123');
+console.log('  Local: local@gov.np / local123');
+console.log('  Citizen: citizen@gov.np / citizen123');
